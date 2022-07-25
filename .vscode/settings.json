@@ -1,3 +1,18 @@
 {
     "cortex-debug.JLinkGDBServerPath": "/usr/bin/JLinkGDBServerCLExe",
+    "files.associations": {
+        "*.vt": "verilog",
+        ".clangd": "yaml",
+        "stm32f4xx_hal_pcd_ex.h": "c",
+        "stm32_hal_legacy.h": "c",
+        "utils.h": "c",
+        "stdlib.h": "c",
+        "endian.h": "c",
+        "stm32f4xx_hal_uart.h": "c",
+        "stdbool.h": "c",
+        "user_utils.h": "c",
+        "string.h": "c",
+        "stm32f4xx_hal_def.h": "c",
+        "stm32f4xx_hal.h": "c"
+    },
 }

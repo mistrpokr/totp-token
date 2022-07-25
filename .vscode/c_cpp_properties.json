@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "nucleo-stm32f412",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32F412Zx",
+                "__GNUC__"
+            ],
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-gcc-arm",
+            "compilerArgs": [
+                "-std c99"
+            ]
+        }
+    ],
+    "version": 4
+}
