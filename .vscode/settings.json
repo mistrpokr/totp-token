@@ -13,6 +13,21 @@
         "user_utils.h": "c",
         "string.h": "c",
         "stm32f4xx_hal_def.h": "c",
-        "stm32f4xx_hal.h": "c"
+        "stm32f4xx_hal.h": "c",
+        "options.h": "c",
+        "ssl.h": "c",
+        "settings.h": "c",
+        "array": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "bitset": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "valarray": "cpp",
+        "md5.h": "c",
+        "wolfcaam_sha.h": "c",
+        "types.h": "c",
+        "*.tcc": "c",
+        "cstdio": "c"
     },
 }
