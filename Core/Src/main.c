@@ -41,6 +41,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+RNG_HandleTypeDef hrng;
+
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 
@@ -63,6 +65,7 @@ static void MX_GPIO_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_RNG_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
@@ -105,6 +108,7 @@ int main(void) {
   MX_USB_OTG_FS_PCD_Init();
   MX_USART3_UART_Init();
   MX_USART2_UART_Init();
+  MX_RNG_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -196,6 +200,29 @@ void SystemClock_Config(void) {
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK) {
     Error_Handler();
   }
+}
+
+/**
+ * @brief RNG Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_RNG_Init(void) {
+
+  /* USER CODE BEGIN RNG_Init 0 */
+
+  /* USER CODE END RNG_Init 0 */
+
+  /* USER CODE BEGIN RNG_Init 1 */
+
+  /* USER CODE END RNG_Init 1 */
+  hrng.Instance = RNG;
+  if (HAL_RNG_Init(&hrng) != HAL_OK) {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN RNG_Init 2 */
+
+  /* USER CODE END RNG_Init 2 */
 }
 
 /**
@@ -361,9 +388,11 @@ void StartDefaultTask(void *argument) {
   /* Infinite loop */
   util_usart_print("Hello from STM32F412ZG\r\n");
 
+  util_usart_print("wolfCrypt Demo: \n");
+  hash_md5(1);
+
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-
     osDelay(1000);
   }
   for (;;) {
