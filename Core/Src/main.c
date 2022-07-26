@@ -381,15 +381,12 @@ static void MX_GPIO_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument) {
   /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-  char str_at_test[] = "";
-
-  char *buf_usart2 = pvPortMalloc(BUF_SIZE);
-  /* Infinite loop */
   util_usart_print("Hello from STM32F412ZG\r\n");
 
+  char *str_hash_input = "Hello";
   util_usart_print("wolfCrypt Demo: \n");
-  hash_md5(1);
+  hash_md5(str_hash_input, strlen(str_hash_input));
+  hash_sha256(str_hash_input, strlen(str_hash_input));
 
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
