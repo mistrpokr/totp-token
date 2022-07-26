@@ -11,9 +11,12 @@
 // #include <wolfssl/wolfcrypt/sha256.h>
 #include <wolfssl/wolfcrypt/hash.h>
 
+#define util_usart_printf printf
+
 extern UART_HandleTypeDef huart3;
 
-void util_usart_print(char *str);
+void util_usart_printstr(char *str);
+void util_usart_readline(char *str);
 void hash_print(byte *hash, int hash_size);
 void hash_md5(char *in, int size);
 void hash_sha256(char *in, int size);

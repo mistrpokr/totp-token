@@ -381,13 +381,17 @@ static void MX_GPIO_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument) {
   /* USER CODE BEGIN 5 */
-  util_usart_print("Hello from STM32F412ZG\r\n");
-  printf("Testing printf\n");
+  util_usart_printstr("Hello from STM32F412ZG\r\n");
+  util_usart_printf("Testing printf\n");
 
   char *str_hash_input = "Hello";
-  util_usart_print("wolfCrypt Demo: \n");
+  util_usart_printstr("wolfCrypt Demo: \n");
   hash_md5(str_hash_input, strlen(str_hash_input));
   hash_sha256(str_hash_input, strlen(str_hash_input));
+
+  char buf[64];
+  util_usart_readline(buf);
+  util_usart_printf("%s\n", buf);
 
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
