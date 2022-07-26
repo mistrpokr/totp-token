@@ -19,7 +19,7 @@ void util_usart_printstr(char *str);
 void util_usart_readline(char *str);
 void hash_print(byte *hash, int hash_size);
 int hash_print_str(byte *hash, int hash_size, char *str);
-void hash_md5(char *in, int size);
-int hash_sha256(char *in, int size, byte *out, int out_size);
+void hash_md5(char *in, int in_size, byte *out, int out_size);
+int hash_sha256(char *in, int in_size, byte *out, int out_size);
 
 #endif

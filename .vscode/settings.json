@@ -28,6 +28,7 @@
         "wolfcaam_sha.h": "c",
         "types.h": "c",
         "*.tcc": "c",
-        "cstdio": "c"
+        "cstdio": "c",
+        "stdio.h": "c"
     },
 }
