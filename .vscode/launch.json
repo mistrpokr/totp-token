@@ -18,7 +18,7 @@
             ],
             "interface": "swd",
             "device": "STM32F412ZG",
-            "preLaunchTask": "flash"
+            // "preLaunchTask": "flash"
         }
     ]
 }
