@@ -22,7 +22,6 @@ void util_usart_readline(char *str) {
 
 void hash_print(byte *hash, int hash_size) {
   char hex_repr[2] = ""; // 1 Byte -> 2-char hexadecimal representation
-  util_usart_printstr("\n");
   for (int i = 0; i < hash_size; i++) {
     if (sprintf(hex_repr, "%02x", hash[i]) >= 0) // If sprintf doesn't fail
       util_usart_printstr(hex_repr);
@@ -36,9 +35,9 @@ void hash_md5(char *in, int size) {
   hash_print(md5sum, sizeof(md5sum));
 }
 
-void hash_sha256(char *in, int size) {
-  byte sha256sum[SHA256_DIGEST_SIZE];
-
-  wc_Sha256Hash((byte *)in, (word32)size, sha256sum);
-  hash_print(sha256sum, sizeof(sha256sum));
+int hash_sha256(char *in, int in_size, byte *out, int out_size) {
+  if (out_size != SHA256_DIGEST_SIZE) {
+    return -1; // Digest buffer size mismatch
+  }
+  wc_Sha256Hash((byte *)in, (word32)in_size, out);
 }
