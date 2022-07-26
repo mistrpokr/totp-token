@@ -57,6 +57,8 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 byte sha256sum[SHA256_DIGEST_SIZE];
+char buf_print[2 * SHA256_DIGEST_SIZE];
+char buf_line[64];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -382,20 +384,16 @@ static void MX_GPIO_Init(void) {
 void StartDefaultTask(void *argument) {
   /* USER CODE BEGIN 5 */
   util_usart_printstr("Hello from STM32F412ZG\r\n");
-  util_usart_printf("Testing printf\n");
 
-  char *str_hash_input = "Hello";
-  char buf[64];
   while (1) {
-    util_usart_readline(buf);
-    util_usart_printf("%s\n", buf);
-    hash_sha256(buf, strlen(buf), sha256sum, SHA256_DIGEST_SIZE);
+    util_usart_readline(buf_line);
+    hash_sha256(buf_line, strlen(buf_line), sha256sum, SHA256_DIGEST_SIZE);
+    hash_print_str(sha256sum, sizeof(sha256sum), buf_print);
 
     util_usart_printf("[SHA256]\ninput: \n");
-    util_usart_printf("%s\n", buf);
+    util_usart_printf("%s\n", buf_line);
     util_usart_printf("output: \n");
-    hash_print(sha256sum, SHA256_DIGEST_SIZE);
-    util_usart_printf("\n\n");
+    util_usart_printf("%s\n", buf_print);
   }
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);

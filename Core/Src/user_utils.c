@@ -28,6 +28,18 @@ void hash_print(byte *hash, int hash_size) {
   }
 }
 
+int hash_print_str(byte *hash, int hash_size, char *str) {
+  char hex_repr[2] = "";
+  for (int i = 0; i < hash_size; i++) {
+    if (sprintf(hex_repr, "%02x", hash[i]) < 0) {
+      return -1;
+    }
+    str[i + 0] = hex_repr[0];
+    str[i + 1] = hex_repr[1];
+  }
+  return 0;
+}
+
 void hash_md5(char *in, int size) {
   byte md5sum[MD5_DIGEST_SIZE];
 
