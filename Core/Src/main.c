@@ -58,6 +58,7 @@ const osThreadAttr_t defaultTask_attributes = {
 /* USER CODE BEGIN PV */
 byte md5sum[MD5_DIGEST_SIZE];
 byte sha256sum[SHA256_DIGEST_SIZE];
+byte hmac256sum[SHA256_DIGEST_SIZE];
 char buf_print[128];
 char buf_line[64];
 /* USER CODE END PV */
@@ -399,11 +400,16 @@ void StartDefaultTask(void *argument) {
     util_usart_printf("%s\n", buf_print);
 
     hash_md5(buf_line, strlen(buf_line), md5sum, MD5_DIGEST_SIZE);
-    util_usart_printf("[MD5]\n");
-    hash_print(md5sum, MD5_DIGEST_SIZE);
-    util_usart_printf("\n");
-    util_usart_printf("output: \n");
     hash_print_str(md5sum, sizeof(md5sum), buf_print);
+    util_usart_printf("[MD5]\n");
+    util_usart_printf("output: \n");
+    util_usart_printf("%s\n", buf_print);
+
+    hash_hmac256(buf_line, strlen(buf_line), "key", 3, hmac256sum,
+                 SHA256_DIGEST_SIZE);
+    hash_print_str(hmac256sum, sizeof(hmac256sum), buf_print);
+    util_usart_printf("[HMAC(SHA256)]\n");
+    util_usart_printf("output: \n");
     util_usart_printf("%s\n", buf_print);
   }
   while (true) {
