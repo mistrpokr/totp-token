@@ -405,8 +405,8 @@ void StartDefaultTask(void *argument) {
     util_usart_printf("output: \n");
     util_usart_printf("%s\n", buf_print);
 
-    hash_hmac256(buf_line, strlen(buf_line), "key", 3, hmac256sum,
-                 SHA256_DIGEST_SIZE);
+    hash_hmac256(buf_line, strlen(buf_line), HMAC256_DEFAULT_KEY,
+                 sizeof(HMAC256_DEFAULT_KEY), hmac256sum, SHA256_DIGEST_SIZE);
     hash_print_str(hmac256sum, sizeof(hmac256sum), buf_print);
     util_usart_printf("[HMAC(SHA256)]\n");
     util_usart_printf("output: \n");
