@@ -16,31 +16,38 @@
  ******************************************************************************
  */
 /* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+/* Includes
+ * ------------------------------------------------------------------*/
 #include "main.h"
+
 #include "cmsis_os.h"
 
-/* Private includes ----------------------------------------------------------*/
+/* Private includes
+ * ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
-/* Private typedef -----------------------------------------------------------*/
+/* Private typedef
+ * -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
 
-/* Private define ------------------------------------------------------------*/
+/* Private define
+ * ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define BUF_SIZE 4
 /* USER CODE END PD */
 
-/* Private macro -------------------------------------------------------------*/
+/* Private macro
+ * -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
 /* USER CODE END PM */
 
-/* Private variables ---------------------------------------------------------*/
+/* Private variables
+ * ---------------------------------------------------------*/
 RNG_HandleTypeDef hrng;
 
 UART_HandleTypeDef huart2;
@@ -51,9 +58,9 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
-    .name = "defaultTask",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityNormal,
+  .name = "defaultTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t)osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
 byte md5sum[MD5_DIGEST_SIZE];
@@ -63,20 +70,29 @@ char buf_print[128];
 char buf_line[64];
 /* USER CODE END PV */
 
-/* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_USB_OTG_FS_PCD_Init(void);
-static void MX_USART3_UART_Init(void);
-static void MX_USART2_UART_Init(void);
-static void MX_RNG_Init(void);
-void StartDefaultTask(void *argument);
+/* Private function prototypes
+ * -----------------------------------------------*/
+void
+SystemClock_Config(void);
+static void
+MX_GPIO_Init(void);
+static void
+MX_USB_OTG_FS_PCD_Init(void);
+static void
+MX_USART3_UART_Init(void);
+static void
+MX_USART2_UART_Init(void);
+static void
+MX_RNG_Init(void);
+void
+StartDefaultTask(void* argument);
 
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
-/* Private user code ---------------------------------------------------------*/
+/* Private user code
+ * ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -85,12 +101,15 @@ void StartDefaultTask(void *argument);
  * @brief  The application entry point.
  * @retval int
  */
-int main(void) {
+int
+main(void)
+{
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
+  /* MCU
+   * Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick.
    */
@@ -139,7 +158,7 @@ int main(void) {
   /* Create the thread(s) */
   /* creation of defaultTask */
   defaultTaskHandle =
-      osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+    osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -167,9 +186,11 @@ int main(void) {
  * @brief System Clock Configuration
  * @retval None
  */
-void SystemClock_Config(void) {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+void
+SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 
   /** Configure the main internal regulator output voltage
    */
@@ -211,8 +232,9 @@ void SystemClock_Config(void) {
  * @param None
  * @retval None
  */
-static void MX_RNG_Init(void) {
-
+static void
+MX_RNG_Init(void)
+{
   /* USER CODE BEGIN RNG_Init 0 */
 
   /* USER CODE END RNG_Init 0 */
@@ -234,8 +256,9 @@ static void MX_RNG_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_USART2_UART_Init(void) {
-
+static void
+MX_USART2_UART_Init(void)
+{
   /* USER CODE BEGIN USART2_Init 0 */
 
   /* USER CODE END USART2_Init 0 */
@@ -264,8 +287,9 @@ static void MX_USART2_UART_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_USART3_UART_Init(void) {
-
+static void
+MX_USART3_UART_Init(void)
+{
   /* USER CODE BEGIN USART3_Init 0 */
 
   /* USER CODE END USART3_Init 0 */
@@ -294,8 +318,9 @@ static void MX_USART3_UART_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_USB_OTG_FS_PCD_Init(void) {
-
+static void
+MX_USB_OTG_FS_PCD_Init(void)
+{
   /* USER CODE BEGIN USB_OTG_FS_Init 0 */
 
   /* USER CODE END USB_OTG_FS_Init 0 */
@@ -327,8 +352,10 @@ static void MX_USB_OTG_FS_PCD_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_GPIO_Init(void) {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+static void
+MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -342,8 +369,8 @@ static void MX_GPIO_Init(void) {
   HAL_GPIO_WritePin(GPIOB, LD1_Pin | LD3_Pin | LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(USB_PowerSwitchOn_GPIO_Port, USB_PowerSwitchOn_Pin,
-                    GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(
+    USB_PowerSwitchOn_GPIO_Port, USB_PowerSwitchOn_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : USER_Btn_Pin */
   GPIO_InitStruct.Pin = USER_Btn_Pin;
@@ -383,7 +410,9 @@ static void MX_GPIO_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument) {
+void
+StartDefaultTask(void* argument)
+{
   /* USER CODE BEGIN 5 */
   util_usart_printstr("Hello from STM32F412ZG\r\n");
 
@@ -405,8 +434,12 @@ void StartDefaultTask(void *argument) {
     util_usart_printf("output: \n");
     util_usart_printf("%s\n", buf_print);
 
-    hash_hmac256(buf_line, strlen(buf_line), HMAC256_DEFAULT_KEY,
-                 sizeof(HMAC256_DEFAULT_KEY), hmac256sum, SHA256_DIGEST_SIZE);
+    hash_hmac256(buf_line,
+                 strlen(buf_line),
+                 HMAC256_DEFAULT_KEY,
+                 sizeof(HMAC256_DEFAULT_KEY),
+                 hmac256sum,
+                 SHA256_DIGEST_SIZE);
     hash_print_str(hmac256sum, sizeof(hmac256sum), buf_print);
     util_usart_printf("[HMAC(SHA256)]\n");
     util_usart_printf("output: \n");
@@ -430,7 +463,9 @@ void StartDefaultTask(void *argument) {
  * @param  htim : TIM handle
  * @retval None
  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void
+HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
@@ -446,9 +481,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  * @brief  This function is executed in case of error occurrence.
  * @retval None
  */
-void Error_Handler(void) {
+void
+Error_Handler(void)
+{
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+  /* User can add his own implementation to report the HAL error return state
+   */
   __disable_irq();
   while (1) {
   }
@@ -463,7 +501,9 @@ void Error_Handler(void) {
  * @param  line: assert_param error line source number
  * @retval None
  */
-void assert_failed(uint8_t *file, uint32_t line) {
+void
+assert_failed(uint8_t* file, uint32_t line)
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line
      number, ex: printf("Wrong parameters value: file %s on line %d\r\n", file,
