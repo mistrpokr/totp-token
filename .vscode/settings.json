@@ -29,6 +29,10 @@
         "types.h": "c",
         "*.tcc": "c",
         "cstdio": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "cstddef": "c",
+        "crypt.h": "c",
+        "hash.h": "c",
+        "wc_port.h": "c"
     },
 }

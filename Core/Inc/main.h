@@ -32,6 +32,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "user_utils.h"
+#include "crypt.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
