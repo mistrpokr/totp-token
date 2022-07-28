@@ -71,6 +71,20 @@ util_esp_readline()
   uart_esp_line_buffer[uart_esp_line_ptr - 1] = '\0';
   uart_esp_line_ptr = 0;
 
-  printf("LINE#%d\n", total_received_lines++);
+  // printf("LINE#%d\n", total_received_lines++);
   return uart_esp_line_buffer;
+}
+
+int
+util_str_check_startswith(char* str, char* key, int key_size)
+{
+  for (int i = 0; i < key_size; i++) {
+    if (str[i] != key[i]) {
+      /* Negative */
+      return -1;
+    }
+  }
+
+  /* Positive */
+  return 0;
 }

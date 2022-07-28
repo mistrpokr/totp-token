@@ -381,11 +381,12 @@ StartDefaultTask(void* argument)
   char str_it[] = "USART IRQ TEST\n";
   // HAL_UART_Transmit_IT(&huart3, str_it, strlen(str_it));
 
-  util_esp_send("at\r\n");
+  util_esp_send("at+gmr\r\n");
+
+  char* line_buf;
   while (1) {
-    char* buf = util_esp_readline();
-    // util_usart_printstr("Next\n");
-    util_usart_printf("Received from ESP32: \n%s\n", buf);
+    line_buf = util_esp_readline();
+    util_usart_printf("[ESP32]%s\n", line_buf);
   }
 
   while (true) {

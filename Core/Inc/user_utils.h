@@ -20,5 +20,7 @@ void
 util_esp_send(char* str);
 char*
 util_esp_readline();
+int
+util_str_check_startswith(char* str, char* key, int key_size);
 
 #endif
