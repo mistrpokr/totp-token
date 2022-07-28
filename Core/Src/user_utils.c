@@ -9,6 +9,9 @@ char uart_esp_line_buffer[LINE_BUFFER_SIZE] = "";
 int uart_esp_line_ptr = 0;
 
 char str_response[] = "\nGot";
+char str_crlf[] = "\r\n";
+
+char* line_buf; // Pointer to buffer returned by util_esp_readline
 
 void
 HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
@@ -52,6 +55,13 @@ util_usart_readline(char* str)
 
 void
 util_esp_send(char* str)
+{
+  HAL_UART_Transmit(&huart2, str, strlen((char*)str), HAL_MAX_DELAY);
+  HAL_UART_Transmit(&huart2, str_crlf, strlen((char*)str_crlf), HAL_MAX_DELAY);
+}
+
+void
+util_esp_send_raw(char* str)
 {
   HAL_UART_Transmit(&huart2, str, strlen((char*)str), HAL_MAX_DELAY);
 }
