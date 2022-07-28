@@ -1,6 +1,6 @@
 #include "esp_at.h"
 
-extern char* line_buf;
+extern char* esp_read_buf;
 
 void
 at_rst()
@@ -13,8 +13,6 @@ at_gmr()
 {
   util_esp_send("at+gmr");
 
-  while (strstr(line_buf, "OK") == NULL) {
-    line_buf = util_esp_readline();
-  }
+  esp_read_buf = util_esp_read_to_end();
   util_usart_printf("GOT OK\n");
 }

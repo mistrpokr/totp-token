@@ -1,17 +1,25 @@
 #include "user_utils.h"
 
-#define LINE_BUFFER_SIZE 1024
+#define ESP_BUFFER_SIZE 1024
+
+#define STR_ENDS_WITH_OK_CRLF(str)                                             \
+  util_str_ends_with(str, strlen(str), "OK\r\n", strlen("OK\r\n"))
+
+#define STR_ENDS_WITH_ERROR_CRLF(str)                                          \
+  util_str_ends_with(str, strlen(str), "ERROR\r\n", strlen("ERROR\r\n"))
 
 int total_received_lines = 0;
 
 char uart_esp_1char_buffer[1] = "";
-char uart_esp_line_buffer[LINE_BUFFER_SIZE] = "";
+char uart_esp_line_buffer[ESP_BUFFER_SIZE] = "";
 int uart_esp_line_ptr = 0;
+char uart_esp_stream_buffer[ESP_BUFFER_SIZE] = "";
+int uart_esp_stream_ptr = 0;
 
 char str_response[] = "\nGot";
 char str_crlf[] = "\r\n";
 
-char* line_buf; // Pointer to buffer returned by util_esp_readline
+char* esp_read_buf; // Pointer to buffer returned by util_esp_readline
 
 void
 HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
@@ -20,9 +28,9 @@ HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
   if (huart == &huart2) {
     /* Drop CR and accept LF as the only EOL, as terminals might send different
      * EOL symbols */
-    if (*uart_esp_1char_buffer != '\r') {
-      uart_esp_line_buffer[uart_esp_line_ptr++] = *uart_esp_1char_buffer;
-    }
+    // if (*uart_esp_1char_buffer != '\r') {
+    uart_esp_stream_buffer[uart_esp_stream_ptr++] = *uart_esp_1char_buffer;
+    // }
 
     /* Receive next character */
     HAL_UART_Receive_IT(huart, uart_esp_1char_buffer, 1);
@@ -85,16 +93,33 @@ util_esp_readline()
   return uart_esp_line_buffer;
 }
 
-int
-util_str_check_startswith(char* str, char* key, int key_size)
+char*
+util_esp_read_to_end()
 {
-  for (int i = 0; i < key_size; i++) {
-    if (str[i] != key[i]) {
-      /* Negative */
+  /* Start receiving 1 byte */
+  HAL_UART_Receive_IT(&huart2, uart_esp_1char_buffer, 1);
+
+  // while (1) {
+  while (STR_ENDS_WITH_OK_CRLF(uart_esp_stream_buffer) != 0) {
+    __NOP();
+  }
+  *uart_esp_1char_buffer = '\0';
+
+  /* Remove LF character, zero-terminate line buffer string and reset pointer */
+  uart_esp_stream_buffer[uart_esp_stream_ptr - 1] = '\0';
+  uart_esp_stream_ptr = 0;
+
+  return uart_esp_stream_buffer;
+}
+
+int
+util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size)
+{
+  /* e.g. Look for "OK\r\n" */
+  for (int i = 0; i < pattern_size; i++) {
+    if (str[str_size - i] != pattern[pattern_size - i]) {
       return -1;
     }
   }
-
-  /* Positive */
   return 0;
 }

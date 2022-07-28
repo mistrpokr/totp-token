@@ -54,7 +54,7 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t)osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
-extern char* line_buf;
+extern char* esp_read_buf;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -376,15 +376,12 @@ StartDefaultTask(void* argument)
 
   char str_it[] = "USART IRQ TEST\n";
 
-  at_gmr();
-  util_usart_printf("[ESP32]%s\n", line_buf);
+  util_esp_send_raw("at\r\n");
+  esp_read_buf = util_esp_read_to_end();
+  util_usart_printf("GOT OK\n");
 
-  at_rst();
-  line_buf = util_esp_readline();
-  util_usart_printf("[ESP32]%s\n", line_buf);
-
-  at_gmr();
-  util_usart_printf("[ESP32]%s\n", line_buf);
+  // at_gmr();
+  // util_usart_printf("[ESP32]%s\n", esp_read_buf);
 
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
