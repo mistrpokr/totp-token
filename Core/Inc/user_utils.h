@@ -10,8 +10,15 @@
 #define util_usart_printf printf
 
 extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart2;
 
-void util_usart_printstr(char *str);
-void util_usart_readline(char *str);
+void
+util_usart_printstr(char* str);
+void
+util_usart_readline(char* str);
+void
+util_esp_send(char* str);
+char*
+util_esp_readline();
 
 #endif

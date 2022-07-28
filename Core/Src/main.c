@@ -16,44 +16,35 @@
  ******************************************************************************
  */
 /* USER CODE END Header */
-/* Includes
- * ------------------------------------------------------------------*/
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
 #include "cmsis_os.h"
 
-/* Private includes
- * ----------------------------------------------------------*/
+/* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
-/* Private typedef
- * -----------------------------------------------------------*/
+/* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
 
-/* Private define
- * ------------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define BUF_SIZE 4
 /* USER CODE END PD */
 
-/* Private macro
- * -------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
 /* USER CODE END PM */
 
-/* Private variables
- * ---------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
 RNG_HandleTypeDef hrng;
 
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
-
-PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -67,23 +58,20 @@ byte md5sum[MD5_DIGEST_SIZE];
 byte sha256sum[SHA256_DIGEST_SIZE];
 byte hmac256sum[SHA256_DIGEST_SIZE];
 char buf_print[128];
-char buf_line[64];
+// char buf_line[64];
 /* USER CODE END PV */
 
-/* Private function prototypes
- * -----------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
 void
 SystemClock_Config(void);
 static void
 MX_GPIO_Init(void);
 static void
-MX_USB_OTG_FS_PCD_Init(void);
-static void
 MX_USART3_UART_Init(void);
 static void
-MX_USART2_UART_Init(void);
-static void
 MX_RNG_Init(void);
+static void
+MX_USART2_UART_Init(void);
 void
 StartDefaultTask(void* argument);
 
@@ -91,8 +79,7 @@ StartDefaultTask(void* argument);
 
 /* USER CODE END PFP */
 
-/* Private user code
- * ---------------------------------------------------------*/
+/* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -108,8 +95,7 @@ main(void)
 
   /* USER CODE END 1 */
 
-  /* MCU
-   * Configuration--------------------------------------------------------*/
+  /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick.
    */
@@ -128,10 +114,9 @@ main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USB_OTG_FS_PCD_Init();
   MX_USART3_UART_Init();
-  MX_USART2_UART_Init();
   MX_RNG_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -235,6 +220,7 @@ SystemClock_Config(void)
 static void
 MX_RNG_Init(void)
 {
+
   /* USER CODE BEGIN RNG_Init 0 */
 
   /* USER CODE END RNG_Init 0 */
@@ -259,6 +245,7 @@ MX_RNG_Init(void)
 static void
 MX_USART2_UART_Init(void)
 {
+
   /* USER CODE BEGIN USART2_Init 0 */
 
   /* USER CODE END USART2_Init 0 */
@@ -290,6 +277,7 @@ MX_USART2_UART_Init(void)
 static void
 MX_USART3_UART_Init(void)
 {
+
   /* USER CODE BEGIN USART3_Init 0 */
 
   /* USER CODE END USART3_Init 0 */
@@ -311,40 +299,6 @@ MX_USART3_UART_Init(void)
   /* USER CODE BEGIN USART3_Init 2 */
 
   /* USER CODE END USART3_Init 2 */
-}
-
-/**
- * @brief USB_OTG_FS Initialization Function
- * @param None
- * @retval None
- */
-static void
-MX_USB_OTG_FS_PCD_Init(void)
-{
-  /* USER CODE BEGIN USB_OTG_FS_Init 0 */
-
-  /* USER CODE END USB_OTG_FS_Init 0 */
-
-  /* USER CODE BEGIN USB_OTG_FS_Init 1 */
-
-  /* USER CODE END USB_OTG_FS_Init 1 */
-  hpcd_USB_OTG_FS.Instance = USB_OTG_FS;
-  hpcd_USB_OTG_FS.Init.dev_endpoints = 6;
-  hpcd_USB_OTG_FS.Init.speed = PCD_SPEED_FULL;
-  hpcd_USB_OTG_FS.Init.dma_enable = DISABLE;
-  hpcd_USB_OTG_FS.Init.phy_itface = PCD_PHY_EMBEDDED;
-  hpcd_USB_OTG_FS.Init.Sof_enable = ENABLE;
-  hpcd_USB_OTG_FS.Init.low_power_enable = DISABLE;
-  hpcd_USB_OTG_FS.Init.lpm_enable = DISABLE;
-  hpcd_USB_OTG_FS.Init.battery_charging_enable = ENABLE;
-  hpcd_USB_OTG_FS.Init.vbus_sensing_enable = ENABLE;
-  hpcd_USB_OTG_FS.Init.use_dedicated_ep1 = DISABLE;
-  if (HAL_PCD_Init(&hpcd_USB_OTG_FS) != HAL_OK) {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USB_OTG_FS_Init 2 */
-
-  /* USER CODE END USB_OTG_FS_Init 2 */
 }
 
 /**
@@ -397,6 +351,14 @@ MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(USB_OverCurrent_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : USB_SOF_Pin USB_ID_Pin USB_DM_Pin USB_DP_Pin */
+  GPIO_InitStruct.Pin = USB_SOF_Pin | USB_ID_Pin | USB_DM_Pin | USB_DP_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 }
 
 /* USER CODE BEGIN 4 */
@@ -416,35 +378,16 @@ StartDefaultTask(void* argument)
   /* USER CODE BEGIN 5 */
   util_usart_printstr("Hello from STM32F412ZG\r\n");
 
+  char str_it[] = "USART IRQ TEST\n";
+  // HAL_UART_Transmit_IT(&huart3, str_it, strlen(str_it));
+
+  util_esp_send("at\r\n");
   while (1) {
-    util_usart_readline(buf_line);
-
-    util_usart_printf("input: \n");
-    util_usart_printf("%s\n", buf_line);
-
-    hash_sha256(buf_line, strlen(buf_line), sha256sum, SHA256_DIGEST_SIZE);
-    hash_print_str(sha256sum, sizeof(sha256sum), buf_print);
-    util_usart_printf("[SHA256]\n");
-    util_usart_printf("output: \n");
-    util_usart_printf("%s\n", buf_print);
-
-    hash_md5(buf_line, strlen(buf_line), md5sum, MD5_DIGEST_SIZE);
-    hash_print_str(md5sum, sizeof(md5sum), buf_print);
-    util_usart_printf("[MD5]\n");
-    util_usart_printf("output: \n");
-    util_usart_printf("%s\n", buf_print);
-
-    hash_hmac256(buf_line,
-                 strlen(buf_line),
-                 HMAC256_DEFAULT_KEY,
-                 sizeof(HMAC256_DEFAULT_KEY),
-                 hmac256sum,
-                 SHA256_DIGEST_SIZE);
-    hash_print_str(hmac256sum, sizeof(hmac256sum), buf_print);
-    util_usart_printf("[HMAC(SHA256)]\n");
-    util_usart_printf("output: \n");
-    util_usart_printf("%s\n", buf_print);
+    char* buf = util_esp_readline();
+    // util_usart_printstr("Next\n");
+    util_usart_printf("Received from ESP32: \n%s\n", buf);
   }
+
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
     osDelay(1000);
