@@ -22,7 +22,7 @@ TARGET = f412_exp
 # debug build?
 DEBUG = 1
 # optimization
-OPT = -Og
+OPT = -O0
 
 
 #######################################
