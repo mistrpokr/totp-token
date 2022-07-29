@@ -15,6 +15,7 @@
 char uart_esp_1char_buffer[1] = "";
 char uart_esp_stream_buffer[ESP_BUFFER_SIZE] = "";
 int uart_esp_stream_ptr = 0;
+char* esp_read_buf; // Pointer to buffer returned by util_esp_read*
 
 const char crlf[] = "\r\n";
 
