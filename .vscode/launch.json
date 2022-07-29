@@ -14,11 +14,11 @@
             "servertype": "openocd",
             "configFiles": [
                 "board/st_nucleo_f4.cfg",
-                // "target/stm32f4x.cfg"
             ],
             "interface": "swd",
             "device": "STM32F412ZG",
-            // "preLaunchTask": "flash"
+            // "preLaunchTask": "flash",
+            "svdFile": "STM32F412.svd"
         }
     ]
 }
