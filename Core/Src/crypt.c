@@ -1,9 +1,5 @@
 #include "crypt.h"
 
-byte md5sum[MD5_DIGEST_SIZE];
-byte sha256sum[SHA256_DIGEST_SIZE];
-byte hmac256sum[SHA256_DIGEST_SIZE];
-
 void
 hash_print(byte* hash, int hash_size)
 {
@@ -112,4 +108,29 @@ hash_hotp_sha1(char* hmac_result, int hmac_digest_size, int digits)
   int hotp_res = bin_code % ((int)pow(10, digits));
 
   return hotp_res;
+}
+
+int
+hash_totp_sha1(int time)
+{
+  /* Floor based on time step, e.g. 51 secs => 1 step * 30 secs */
+  int64_t steps = (int)floor(time / TIME_STEP);
+  // steps = 0x00000000023523ED;
+  printf("%d\n", (int)steps);
+
+  byte hmac_result[SHA_DIGEST_SIZE] = "";
+  byte steps_in_bytes[8];
+  for (int i = 0; i < 8; i++) {
+    steps_in_bytes[7 - i] = ((steps >> 8 * i) & 0xff);
+  }
+
+  hash_hmac1(steps_in_bytes,
+             8,
+             HMAC_DEFAULT_KEY,
+             strlen(HMAC_DEFAULT_KEY),
+             hmac_result,
+             SHA_DIGEST_SIZE);
+  // hash_print(hmac_result, SHA_DIGEST_SIZE);
+
+  return hash_hotp_sha1(hmac_result, SHA_DIGEST_SIZE, TOTP_DIGITS);
 }

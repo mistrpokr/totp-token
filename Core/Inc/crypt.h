@@ -9,7 +9,9 @@
 #include <wolfssl/wolfcrypt/hmac.h>
 #include <wolfssl/wolfcrypt/md5.h>
 
-#define HMAC_DEFAULT_KEY "key"
+#define HMAC_DEFAULT_KEY "hello"
+#define TIME_STEP 30
+#define TOTP_DIGITS 6
 
 void
 hash_print(byte* hash, int hash_size);
@@ -36,3 +38,6 @@ hash_hmac1(char* in,
 
 int
 hash_hotp_sha1(char* hmac_result, int hmac_digest_size, int digits);
+
+int
+hash_totp_sha1(int time);

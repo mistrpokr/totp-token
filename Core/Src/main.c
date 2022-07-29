@@ -378,40 +378,25 @@ StartDefaultTask(void* argument)
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
   byte hmac1_digest[SHA_DIGEST_SIZE] = "";
   char hmac1_digest_formatted[SHA_DIGEST_SIZE * 2] = "";
-  int hotp_res = 0;
+  int totp_res = 0;
+  int epoch_time = 0;
+
+  util_usart_printf("KEY=%s", HMAC_DEFAULT_KEY);
+
+  /* Update epoch time */
+  util_usart_readline(uart_line_buffer);
+  util_usart_printf("\nMessage: %s\n", uart_line_buffer);
+
+  epoch_time = atoi(uart_line_buffer);
+
   while (1) {
-    util_usart_readline(uart_line_buffer);
-    // hash_hmac256(uart_line_buffer,
-    //              strlen(uart_line_buffer),
-    //              HMAC_DEFAULT_KEY,
-    //              strlen(HMAC_DEFAULT_KEY),
-    //              hmac256_digest,
-    //              SHA256_DIGEST_SIZE);
-    hash_hmac1(uart_line_buffer,
-               strlen(uart_line_buffer),
-               HMAC_DEFAULT_KEY,
-               strlen(HMAC_DEFAULT_KEY),
-               hmac1_digest,
-               SHA_DIGEST_SIZE);
-    hotp_res = hash_hotp_sha1(hmac1_digest, SHA_DIGEST_SIZE, 6);
+    totp_res = hash_totp_sha1(epoch_time);
 
-    util_usart_printf("\nMessage: %s\n", uart_line_buffer);
-    // hash_print(hmac256_digest, SHA256_DIGEST_SIZE);
-    hash_print_str(hmac1_digest, SHA_DIGEST_SIZE, hmac1_digest_formatted);
-    util_usart_printf("HMAC-SHA1 Digest: %s\n", hmac1_digest_formatted);
-    util_usart_printf("HOTP Output: %d\n", hotp_res);
-    // hash_print(hmac1_digest, SHA_DIGEST_SIZE);
+    util_usart_printf("Epoch Time: %d\n", epoch_time);
+    util_usart_printf("TOTP Result: %d\n", totp_res);
+    epoch_time++;
+    osDelay(1000);
   }
-  // util_usart_printf("[ESP32]RESETTING...\n");
-  // at_rst();
-  // at();
-  // at_gmr();
-
-  // for (int i = 0; i < 10; i++) {
-  //   osDelay(100);
-  //   HAL_GPIO_TogglePin(GPIOB, LD1_Pin);
-  // }
-
   for (;;) {
     osDelay(1);
   }
