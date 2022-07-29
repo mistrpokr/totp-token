@@ -372,16 +372,15 @@ void
 StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
-  util_usart_printstr("Hello from STM32F412ZG\r\n");
+  util_usart_printstr("[STM32F412ZG]Starting...\r\n");
 
-  char str_it[] = "USART IRQ TEST\n";
-
-  util_esp_send_raw("at\r\n");
-  esp_read_buf = util_esp_read_to_end();
-  util_usart_printf("GOT OK\n");
-
-  // at_gmr();
-  // util_usart_printf("[ESP32]%s\n", esp_read_buf);
+  util_usart_printf("[ESP32]RESETTING...\n");
+  at_rst();
+  util_usart_printf("[ESP32]%s\n", esp_read_buf);
+  at();
+  util_usart_printf("[ESP32]%s\n", esp_read_buf);
+  at_gmr();
+  util_usart_printf("[ESP32]%s\n", esp_read_buf);
 
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);

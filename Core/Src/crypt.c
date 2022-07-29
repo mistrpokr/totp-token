@@ -1,5 +1,9 @@
 #include "crypt.h"
 
+byte md5sum[MD5_DIGEST_SIZE];
+byte sha256sum[SHA256_DIGEST_SIZE];
+byte hmac256sum[SHA256_DIGEST_SIZE];
+
 void hash_print(byte *hash, int hash_size) {
   char hex_repr[2] = ""; // 1 Byte -> 2-char hexadecimal representation
   for (int i = 0; i < hash_size; i++) {
