@@ -50,7 +50,7 @@ UART_HandleTypeDef huart3;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 128 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t)osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
@@ -373,15 +373,14 @@ StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
   util_usart_printstr("[STM32F412ZG]Starting...\r\n");
-
   util_usart_printf("[ESP32]RESETTING...\n");
   at_rst();
   at();
   at_gmr();
 
-  while (true) {
-    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-    osDelay(1000);
+  for (int i = 0; i < 10; i++) {
+    osDelay(100);
+    HAL_GPIO_TogglePin(GPIOB, LD1_Pin);
   }
   for (;;) {
     osDelay(1);
