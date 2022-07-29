@@ -26,14 +26,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/main.lst",
+      "-Wa,-a,-ad,-alms=build/esp_at.lst",
       "-o",
-      "build/main.o",
-      "Core/Src/main.c"
+      "build/esp_at.o",
+      "Core/Src/esp_at.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/main.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/main.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/esp_at.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/esp_at.o"
   },
   {
     "arguments": [
@@ -70,6 +70,114 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/syscalls.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/syscalls.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/crypt.lst",
+      "-o",
+      "build/crypt.o",
+      "Core/Src/crypt.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/crypt.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/crypt.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/main.lst",
+      "-o",
+      "build/main.o",
+      "Core/Src/main.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/main.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_msp.lst",
+      "-o",
+      "build/stm32f4xx_hal_msp.o",
+      "Core/Src/stm32f4xx_hal_msp.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/stm32f4xx_hal_msp.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_msp.o"
   },
   {
     "arguments": [
@@ -142,114 +250,6 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/stm32f4xx_it.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_it.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/crypt.lst",
-      "-o",
-      "build/crypt.o",
-      "Core/Src/crypt.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/crypt.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/crypt.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_msp.lst",
-      "-o",
-      "build/stm32f4xx_hal_msp.o",
-      "Core/Src/stm32f4xx_hal_msp.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/stm32f4xx_hal_msp.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_msp.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/esp_at.lst",
-      "-o",
-      "build/esp_at.o",
-      "Core/Src/esp_at.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/esp_at.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/esp_at.o"
   },
   {
     "arguments": [
@@ -458,14 +458,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_gpio.lst",
+      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_flash_ramfunc.lst",
       "-o",
-      "build/stm32f4xx_hal_gpio.o",
-      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
+      "build/stm32f4xx_hal_flash_ramfunc.o",
+      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_gpio.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_flash_ramfunc.o"
   },
   {
     "arguments": [
@@ -494,14 +494,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_flash_ramfunc.lst",
+      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_gpio.lst",
       "-o",
-      "build/stm32f4xx_hal_flash_ramfunc.o",
-      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c"
+      "build/stm32f4xx_hal_gpio.o",
+      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_flash_ramfunc.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_gpio.o"
   },
   {
     "arguments": [
@@ -602,14 +602,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_cortex.lst",
+      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_pwr.lst",
       "-o",
-      "build/stm32f4xx_hal_cortex.o",
-      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
+      "build/stm32f4xx_hal_pwr.o",
+      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_cortex.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_pwr.o"
   },
   {
     "arguments": [
@@ -674,50 +674,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_pwr.lst",
+      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_cortex.lst",
       "-o",
-      "build/stm32f4xx_hal_pwr.o",
-      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
+      "build/stm32f4xx_hal_cortex.o",
+      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_pwr.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_tim.lst",
-      "-o",
-      "build/stm32f4xx_hal_tim.o",
-      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_tim.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_cortex.o"
   },
   {
     "arguments": [
@@ -790,6 +754,42 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_exti.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_tim.lst",
+      "-o",
+      "build/stm32f4xx_hal_tim.o",
+      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_tim.o"
   },
   {
     "arguments": [
@@ -926,14 +926,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/freertos.lst",
+      "-Wa,-a,-ad,-alms=build/croutine.lst",
       "-o",
-      "build/freertos.o",
-      "Core/Src/freertos.c"
+      "build/croutine.o",
+      "Middlewares/Third_Party/FreeRTOS/Source/croutine.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/freertos.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/freertos.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/FreeRTOS/Source/croutine.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/croutine.o"
   },
   {
     "arguments": [
@@ -962,14 +962,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/croutine.lst",
+      "-Wa,-a,-ad,-alms=build/freertos.lst",
       "-o",
-      "build/croutine.o",
-      "Middlewares/Third_Party/FreeRTOS/Source/croutine.c"
+      "build/freertos.o",
+      "Core/Src/freertos.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/FreeRTOS/Source/croutine.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/croutine.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Core/Src/freertos.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/freertos.o"
   },
   {
     "arguments": [
@@ -1106,14 +1106,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/tasks.lst",
+      "-Wa,-a,-ad,-alms=build/stream_buffer.lst",
       "-o",
-      "build/tasks.o",
-      "Middlewares/Third_Party/FreeRTOS/Source/tasks.c"
+      "build/stream_buffer.o",
+      "Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/FreeRTOS/Source/tasks.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/tasks.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stream_buffer.o"
   },
   {
     "arguments": [
@@ -1142,14 +1142,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stream_buffer.lst",
+      "-Wa,-a,-ad,-alms=build/tasks.lst",
       "-o",
-      "build/stream_buffer.o",
-      "Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c"
+      "build/tasks.o",
+      "Middlewares/Third_Party/FreeRTOS/Source/tasks.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stream_buffer.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/FreeRTOS/Source/tasks.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/tasks.o"
   },
   {
     "arguments": [
@@ -1394,6 +1394,42 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/ocsp.lst",
+      "-o",
+      "build/ocsp.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/src/ocsp.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/src/ocsp.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/ocsp.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/keys.lst",
       "-o",
       "build/keys.o",
@@ -1438,42 +1474,6 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/src/sniffer.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/sniffer.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/ocsp.lst",
-      "-o",
-      "build/ocsp.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/src/ocsp.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/src/ocsp.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/ocsp.o"
   },
   {
     "arguments": [
@@ -1682,14 +1682,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/test.lst",
+      "-Wa,-a,-ad,-alms=build/benchmark.lst",
       "-o",
-      "build/test.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/test/test.c"
+      "build/benchmark.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/benchmark/benchmark.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/test/test.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/test.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/benchmark/benchmark.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/benchmark.o"
   },
   {
     "arguments": [
@@ -1718,14 +1718,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/benchmark.lst",
+      "-Wa,-a,-ad,-alms=build/test.lst",
       "-o",
-      "build/benchmark.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/benchmark/benchmark.c"
+      "build/test.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/test/test.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/benchmark/benchmark.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/benchmark.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/test/test.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/test.o"
   },
   {
     "arguments": [
@@ -1934,14 +1934,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/camellia.lst",
+      "-Wa,-a,-ad,-alms=build/blake2s.lst",
       "-o",
-      "build/camellia.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/camellia.c"
+      "build/blake2s.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/blake2s.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/camellia.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/camellia.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/blake2s.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/blake2s.o"
   },
   {
     "arguments": [
@@ -1970,14 +1970,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/blake2s.lst",
+      "-Wa,-a,-ad,-alms=build/camellia.lst",
       "-o",
-      "build/blake2s.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/blake2s.c"
+      "build/camellia.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/camellia.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/blake2s.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/blake2s.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/camellia.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/camellia.o"
   },
   {
     "arguments": [
@@ -2546,42 +2546,6 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/error.lst",
-      "-o",
-      "build/error.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/error.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/error.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/error.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/ed25519.lst",
       "-o",
       "build/ed25519.o",
@@ -2618,14 +2582,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/fe_448.lst",
+      "-Wa,-a,-ad,-alms=build/error.lst",
       "-o",
-      "build/fe_448.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/fe_448.c"
+      "build/error.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/error.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/fe_448.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/fe_448.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/error.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/error.o"
   },
   {
     "arguments": [
@@ -2690,6 +2654,42 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/fe_448.lst",
+      "-o",
+      "build/fe_448.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/fe_448.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/fe_448.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/fe_448.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/fe_operations.lst",
       "-o",
       "build/fe_operations.o",
@@ -2726,14 +2726,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/ge_448.lst",
+      "-Wa,-a,-ad,-alms=build/ge_low_mem.lst",
       "-o",
-      "build/ge_448.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_448.c"
+      "build/ge_low_mem.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_low_mem.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_448.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/ge_448.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_low_mem.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/ge_low_mem.o"
   },
   {
     "arguments": [
@@ -2762,14 +2762,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/ge_low_mem.lst",
+      "-Wa,-a,-ad,-alms=build/ge_448.lst",
       "-o",
-      "build/ge_low_mem.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_low_mem.c"
+      "build/ge_448.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_448.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_low_mem.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/ge_low_mem.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/ge_448.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/ge_448.o"
   },
   {
     "arguments": [
@@ -2906,42 +2906,6 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/hmac.lst",
-      "-o",
-      "build/hmac.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/hmac.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/hmac.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/hmac.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/integer.lst",
       "-o",
       "build/integer.o",
@@ -2978,14 +2942,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/md2.lst",
+      "-Wa,-a,-ad,-alms=build/hmac.lst",
       "-o",
-      "build/md2.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/md2.c"
+      "build/hmac.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/hmac.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/md2.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/md2.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/hmac.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/hmac.o"
   },
   {
     "arguments": [
@@ -3022,6 +2986,42 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/logging.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/logging.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/md2.lst",
+      "-o",
+      "build/md2.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/md2.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/md2.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/md2.o"
   },
   {
     "arguments": [
@@ -3158,42 +3158,6 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/poly1305.lst",
-      "-o",
-      "build/poly1305.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/poly1305.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/poly1305.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/poly1305.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/pkcs7.lst",
       "-o",
       "build/pkcs7.o",
@@ -3238,6 +3202,42 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/pkcs12.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/pkcs12.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/poly1305.lst",
+      "-o",
+      "build/poly1305.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/poly1305.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/poly1305.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/poly1305.o"
   },
   {
     "arguments": [
@@ -3662,42 +3662,6 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/signature.lst",
-      "-o",
-      "build/signature.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/signature.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/signature.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/signature.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/sp_arm32.lst",
       "-o",
       "build/sp_arm32.o",
@@ -3734,6 +3698,42 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/signature.lst",
+      "-o",
+      "build/signature.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/signature.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/signature.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/signature.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/sp_arm64.lst",
       "-o",
       "build/sp_arm64.o",
@@ -3742,6 +3742,42 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/sp_arm64.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/sp_arm64.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/sp_armthumb.lst",
+      "-o",
+      "build/sp_armthumb.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/sp_armthumb.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/sp_armthumb.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/sp_armthumb.o"
   },
   {
     "arguments": [
@@ -3814,42 +3850,6 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/sp_c64.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/sp_c64.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/sp_armthumb.lst",
-      "-o",
-      "build/sp_armthumb.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/sp_armthumb.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/sp_armthumb.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/sp_armthumb.o"
   },
   {
     "arguments": [
@@ -4166,14 +4166,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/wc_port.lst",
+      "-Wa,-a,-ad,-alms=build/wc_pkcs11.lst",
       "-o",
-      "build/wc_port.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_port.c"
+      "build/wc_pkcs11.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_pkcs11.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_port.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/wc_port.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_pkcs11.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/wc_pkcs11.o"
   },
   {
     "arguments": [
@@ -4202,14 +4202,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/wc_pkcs11.lst",
+      "-Wa,-a,-ad,-alms=build/wc_port.lst",
       "-o",
-      "build/wc_pkcs11.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_pkcs11.c"
+      "build/wc_port.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_port.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_pkcs11.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/wc_pkcs11.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/wc_port.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/wc_port.o"
   },
   {
     "arguments": [
@@ -4274,42 +4274,6 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/armv8-32-curve25519.lst",
-      "-o",
-      "build/armv8-32-curve25519.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-curve25519.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-curve25519.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/armv8-32-curve25519.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/wolfmath.lst",
       "-o",
       "build/wolfmath.o",
@@ -4346,14 +4310,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/armv8-32-sha512-asm.lst",
+      "-Wa,-a,-ad,-alms=build/armv8-32-curve25519.lst",
       "-o",
-      "build/armv8-32-sha512-asm.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-sha512-asm.c"
+      "build/armv8-32-curve25519.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-curve25519.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-sha512-asm.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/armv8-32-sha512-asm.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-curve25519.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/armv8-32-curve25519.o"
   },
   {
     "arguments": [
@@ -4382,14 +4346,14 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/armv8-curve25519.lst",
+      "-Wa,-a,-ad,-alms=build/armv8-32-sha512-asm.lst",
       "-o",
-      "build/armv8-curve25519.o",
-      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-curve25519.c"
+      "build/armv8-32-sha512-asm.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-sha512-asm.c"
     ],
     "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-curve25519.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/armv8-curve25519.o"
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-32-sha512-asm.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/armv8-32-sha512-asm.o"
   },
   {
     "arguments": [
@@ -4462,6 +4426,42 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-chacha.c",
     "output": "/home/pokr/Code/embedded/f412_exp/build/armv8-chacha.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/armv8-curve25519.lst",
+      "-o",
+      "build/armv8-curve25519.o",
+      "Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-curve25519.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Middlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/wolfcrypt/src/port/arm/armv8-curve25519.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/armv8-curve25519.o"
   },
   {
     "arguments": [
@@ -4706,6 +4706,42 @@
       "-std=c99",
       "-g",
       "-gdwarf-2",
+      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_rng.lst",
+      "-o",
+      "build/stm32f4xx_hal_rng.o",
+      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c"
+    ],
+    "directory": "/home/pokr/Code/embedded/f412_exp",
+    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c",
+    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_rng.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard",
+      "-DUSE_HAL_DRIVER",
+      "-DSTM32F412Zx",
+      "-ICore/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
+      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "-IDrivers/CMSIS/Include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
+      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
+      "-IwolfSSL",
+      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
+      "-O0",
+      "-Wall",
+      "-fdata-sections",
+      "-ffunction-sections",
+      "-std=c99",
+      "-g",
+      "-gdwarf-2",
       "-Wa,-a,-ad,-alms=build/stsafe.lst",
       "-o",
       "build/stsafe.o",
@@ -4751,41 +4787,5 @@
     "directory": "/home/pokr/Code/embedded/f412_exp",
     "file": "/home/pokr/Code/embedded/f412_exp/startup_stm32f412zx.s",
     "output": "/home/pokr/Code/embedded/f412_exp/build/startup_stm32f412zx.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
-      "-c",
-      "-mcpu=cortex-m4",
-      "-mthumb",
-      "-mfpu=fpv4-sp-d16",
-      "-mfloat-abi=hard",
-      "-DUSE_HAL_DRIVER",
-      "-DSTM32F412Zx",
-      "-ICore/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc",
-      "-IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy",
-      "-IDrivers/CMSIS/Device/ST/STM32F4xx/Include",
-      "-IDrivers/CMSIS/Include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/include",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2",
-      "-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F",
-      "-IwolfSSL",
-      "-IMiddlewares/Third_Party/wolfSSL_wolfSSL_wolfSSL/wolfssl/",
-      "-O0",
-      "-Wall",
-      "-fdata-sections",
-      "-ffunction-sections",
-      "-std=c99",
-      "-g",
-      "-gdwarf-2",
-      "-Wa,-a,-ad,-alms=build/stm32f4xx_hal_rng.lst",
-      "-o",
-      "build/stm32f4xx_hal_rng.o",
-      "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c"
-    ],
-    "directory": "/home/pokr/Code/embedded/f412_exp",
-    "file": "/home/pokr/Code/embedded/f412_exp/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c",
-    "output": "/home/pokr/Code/embedded/f412_exp/build/stm32f4xx_hal_rng.o"
   }
 ]

@@ -34,6 +34,7 @@
         "crypt.h": "c",
         "hash.h": "c",
         "wc_port.h": "c",
-        "hmac.h": "c"
+        "hmac.h": "c",
+        "esp_at.h": "c"
     },
 }
