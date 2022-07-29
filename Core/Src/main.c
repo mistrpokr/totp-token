@@ -376,11 +376,8 @@ StartDefaultTask(void* argument)
 
   util_usart_printf("[ESP32]RESETTING...\n");
   at_rst();
-  util_usart_printf("[ESP32]%s\n", esp_read_buf);
   at();
-  util_usart_printf("[ESP32]%s\n", esp_read_buf);
   at_gmr();
-  util_usart_printf("[ESP32]%s\n", esp_read_buf);
 
   while (true) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
