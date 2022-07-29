@@ -55,6 +55,7 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 extern char* esp_read_buf;
+extern char uart_line_buffer[];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -373,15 +374,44 @@ StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
   util_usart_printstr("[STM32F412ZG]Starting...\r\n");
-  util_usart_printf("[ESP32]RESETTING...\n");
-  at_rst();
-  at();
-  at_gmr();
 
-  for (int i = 0; i < 10; i++) {
-    osDelay(100);
-    HAL_GPIO_TogglePin(GPIOB, LD1_Pin);
+  byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
+  byte hmac1_digest[SHA_DIGEST_SIZE] = "";
+  char hmac1_digest_formatted[SHA_DIGEST_SIZE * 2] = "";
+  int hotp_res = 0;
+  while (1) {
+    util_usart_readline(uart_line_buffer);
+    // hash_hmac256(uart_line_buffer,
+    //              strlen(uart_line_buffer),
+    //              HMAC_DEFAULT_KEY,
+    //              strlen(HMAC_DEFAULT_KEY),
+    //              hmac256_digest,
+    //              SHA256_DIGEST_SIZE);
+    hash_hmac1(uart_line_buffer,
+               strlen(uart_line_buffer),
+               HMAC_DEFAULT_KEY,
+               strlen(HMAC_DEFAULT_KEY),
+               hmac1_digest,
+               SHA_DIGEST_SIZE);
+    hotp_res = hash_hotp_sha1(hmac1_digest, SHA_DIGEST_SIZE, 6);
+
+    util_usart_printf("\nMessage: %s\n", uart_line_buffer);
+    // hash_print(hmac256_digest, SHA256_DIGEST_SIZE);
+    hash_print_str(hmac1_digest, SHA_DIGEST_SIZE, hmac1_digest_formatted);
+    util_usart_printf("HMAC-SHA1 Digest: %s\n", hmac1_digest_formatted);
+    util_usart_printf("HOTP Output: %d\n", hotp_res);
+    // hash_print(hmac1_digest, SHA_DIGEST_SIZE);
   }
+  // util_usart_printf("[ESP32]RESETTING...\n");
+  // at_rst();
+  // at();
+  // at_gmr();
+
+  // for (int i = 0; i < 10; i++) {
+  //   osDelay(100);
+  //   HAL_GPIO_TogglePin(GPIOB, LD1_Pin);
+  // }
+
   for (;;) {
     osDelay(1);
   }

@@ -79,7 +79,7 @@
 #define WOLF_CONF_MD5      1
 
 /*---------- WOLF_CONF_SHA1 -----------*/
-#define WOLF_CONF_SHA1      0
+#define WOLF_CONF_SHA1      1
 
 /*---------- WOLF_CONF_SHA2_224 -----------*/
 #define WOLF_CONF_SHA2_224      0

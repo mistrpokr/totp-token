@@ -1,6 +1,7 @@
 #include "user_utils.h"
 #include "esp_at.h"
 
+#define LINE_BUFFER_SIZE 1024
 #define ESP_BUFFER_SIZE 1024
 
 #define STR_ENDS_WITH_OK_CRLF(str)                                             \
@@ -12,6 +13,7 @@
 #define STR_ENDS_WITH_READY_CRLF(str)                                          \
   util_str_ends_with(str, strlen(str), "ready\r\n", strlen("ready\r\n"))
 
+char uart_line_buffer[LINE_BUFFER_SIZE] = "";
 char uart_esp_1char_buffer[1] = "";
 char uart_esp_stream_buffer[ESP_BUFFER_SIZE] = "";
 int uart_esp_stream_ptr = 0;
