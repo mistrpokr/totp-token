@@ -122,3 +122,101 @@ util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size)
   }
   return 0;
 }
+
+void
+util_display_init()
+{
+  /* Init driver struct */
+  ST7735S_Init();
+  setOrientation(R270);
+
+  /* Clear buffer with white background */
+  setColor(0, 0, 0);
+  fillScreen();
+
+  /* Flush buffer to display */
+  flushBuffer();
+}
+
+void
+util_display_totp(int totp)
+{
+  char totp_text[6] = "";
+  sprintf(totp_text, "%d", totp);
+
+  setColor(255, 255, 255);
+  setFont(ter_u24b);
+  drawText(40, 70, totp_text);
+
+  flushBuffer();
+}
+
+void
+util_display_example(void)
+{
+  ST7735S_Init();
+  setOrientation(R180);
+
+  uint8_t f = 0;
+
+  setColor(0, 0, 0);
+  fillScreen();
+  setColor(255, 255, 255);
+  drawLine(0, 0, WIDTH, HEIGHT);
+  drawLine(WIDTH / 2, 0, WIDTH / 2, HEIGHT);
+
+  setFont(ter_u24b);
+  drawText(50, 50, "Hi! ");
+
+  flushBuffer();
+  for (;;)
+    ;
+
+  while (1) {
+
+    f = 1 - f;
+    if (f) {
+      setColor(0, 0, 0);
+      fillScreen();
+    } else {
+
+      uint8_t r = 0, g = 0, b = 0;
+      for (int y = 0; y < HEIGHT; y++)
+        for (int x = 0; x < WIDTH; x++) {
+          setColor(r, g, b);
+          setPixel(x, y);
+          r = x % 32;
+          g = (x + y) % 64;
+          b = y % 32;
+        }
+    }
+
+    for (int i = 0; i < 32; i++) {
+      setColor(i, i, i);
+      drawLine(0, i, WIDTH - 1, i);
+    }
+    setColor(31, 63, 31);
+    setbgColor(0, 0, 0);
+    setFont(ter_u24b);
+    drawText(4, 33, "Hi World!");
+    for (int i = 0; i < 64; i++) {
+      setColor(i / 2, 63 - i, i / 2);
+      drawLine(WIDTH - 1 - i, 0, WIDTH - 1 - i, HEIGHT - 1);
+    }
+    for (int i = 0; i < 64; i++) {
+      setColor(i / 2, i, i / 2);
+      drawLine(0, HEIGHT - 1 - i, WIDTH - 1, HEIGHT - 1 - i);
+    }
+
+    setColor(10, 20, 30);
+    drawCircle(80, 50, 30);
+
+    setColor(30, 10, 30);
+    drawCircle(40, 10, 90);
+
+    setColor(30, 0, 30);
+    drawLine(0, 0, WIDTH - 1, HEIGHT - 1);
+
+    flushBuffer();
+  }
+}
