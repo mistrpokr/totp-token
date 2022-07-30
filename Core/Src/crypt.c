@@ -94,9 +94,6 @@ hash_hmac1(char* in,
 int
 hash_hotp_sha1(char* hmac_result, int hmac_digest_size, int digits)
 {
-  // byte hmac_result[] = { 0x1f, 0x86, 0x98, 0x69, 0x0e, 0x02, 0xca,
-  //                        0x16, 0x61, 0x85, 0x50, 0xef, 0x7f, 0x19,
-  //                        0xda, 0x8e, 0x94, 0x5b, 0x55, 0x5a };
   /* Step 1: Retrieve offset */
   int offset = hmac_result[hmac_digest_size - 1] & 0xf;
   /* Step 2: Truncate 31 bits from digest[offset...offset+3] */
@@ -114,11 +111,14 @@ int
 hash_totp_sha1(int time)
 {
   /* Floor based on time step, e.g. 51 secs => 1 step * 30 secs */
+  /* TODO: Inspect floor()'s performance on MCUs, can be substituted with
+   * non-floating point number operation */
   int64_t steps = (int)floor(time / TIME_STEP);
-  // steps = 0x00000000023523ED;
   printf("%d\n", (int)steps);
 
   byte hmac_result[SHA_DIGEST_SIZE] = "";
+
+  /* Convert steps (int64, 64 bits) to byte (8 bits) array with a length of 8 */
   byte steps_in_bytes[8];
   for (int i = 0; i < 8; i++) {
     steps_in_bytes[7 - i] = ((steps >> 8 * i) & 0xff);

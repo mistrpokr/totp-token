@@ -8,6 +8,9 @@
 #include <string.h>
 
 #include "esp_at.h"
+#include "fonts.h"
+#include "gfx.h"
+#include "st7735s.h"
 
 #define util_usart_printf printf
 
@@ -35,5 +38,7 @@ int
 util_str_check_startswith(char* str, char* key, int key_size);
 int
 util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size);
+void
+st7735s_example(void);
 
 #endif

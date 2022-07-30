@@ -1,0 +1,3 @@
+[submodule "Drivers/Display/ST7735S"]
+	path = Drivers/Display/ST7735S
+	url = git@github.com:bersch/ST7735S.git

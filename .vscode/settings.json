@@ -35,6 +35,19 @@
         "hash.h": "c",
         "wc_port.h": "c",
         "hmac.h": "c",
-        "esp_at.h": "c"
+        "esp_at.h": "c",
+        "typeinfo": "c",
+        "st7735s_compat.h": "c",
+        "stm32f4xx_ll_gpio.h": "c",
+        "charconv": "c",
+        "functional": "c",
+        "iosfwd": "c",
+        "limits": "c",
+        "ratio": "c",
+        "streambuf": "c",
+        "system_error": "c",
+        "utility": "c",
+        "variant": "c",
+        "*.inc": "c"
     },
 }
