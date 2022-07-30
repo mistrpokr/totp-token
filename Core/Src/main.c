@@ -496,8 +496,7 @@ StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
   util_usart_printstr("[STM32F412ZG]Starting...\r\n");
-
-  st7735s_example();
+  util_display_init();
 
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
   byte hmac1_digest[SHA_DIGEST_SIZE] = "";
@@ -518,6 +517,8 @@ StartDefaultTask(void* argument)
 
     util_usart_printf("Epoch Time: %d\n", epoch_time);
     util_usart_printf("TOTP Result: %d\n", totp_res);
+    util_display_totp(totp_res);
+
     epoch_time++;
     osDelay(1000);
   }

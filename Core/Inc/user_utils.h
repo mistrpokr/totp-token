@@ -39,6 +39,10 @@ util_str_check_startswith(char* str, char* key, int key_size);
 int
 util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size);
 void
-st7735s_example(void);
+util_display_init();
+void
+util_display_totp(int totp);
+void
+util_display_example(void);
 
 #endif

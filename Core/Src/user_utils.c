@@ -124,7 +124,35 @@ util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size)
 }
 
 void
-st7735s_example(void)
+util_display_init()
+{
+  /* Init driver struct */
+  ST7735S_Init();
+  setOrientation(R270);
+
+  /* Clear buffer with white background */
+  setColor(0, 0, 0);
+  fillScreen();
+
+  /* Flush buffer to display */
+  flushBuffer();
+}
+
+void
+util_display_totp(int totp)
+{
+  char totp_text[6] = "";
+  sprintf(totp_text, "%d", totp);
+
+  setColor(255, 255, 255);
+  setFont(ter_u24b);
+  drawText(40, 70, totp_text);
+
+  flushBuffer();
+}
+
+void
+util_display_example(void)
 {
   ST7735S_Init();
   setOrientation(R180);
