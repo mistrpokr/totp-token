@@ -5,3 +5,5 @@
 
 time_t
 time_from_rtc(RTC_TimeTypeDef rtc_time, RTC_DateTypeDef rtc_date);
+void
+rtc_demo();

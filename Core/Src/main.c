@@ -139,7 +139,7 @@ main(void)
   MX_TIM3_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-
+  util_usart_printstr("[STM32F412ZG]Starting...\r\n");
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -549,7 +549,6 @@ void
 StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
-  util_usart_printstr("[STM32F412ZG]Starting...\r\n");
   util_display_init();
 
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
@@ -558,7 +557,7 @@ StartDefaultTask(void* argument)
   int totp_res = 0;
   int epoch_time = 0;
 
-  util_usart_printf("KEY=%s", HMAC_DEFAULT_KEY);
+  // util_usart_printf("KEY=%s", HMAC_DEFAULT_KEY);
 
   /* Update epoch time */
   // util_usart_readline(uart_line_buffer);
@@ -594,42 +593,18 @@ void
 StartCommsTask(void* argument)
 {
   /* USER CODE BEGIN StartCommsTask */
-  RTC_TimeTypeDef rtc_time_set;
-  rtc_time_set.Hours = 19;
-  rtc_time_set.Minutes = 30;
-  rtc_time_set.Seconds = 0;
-  RTC_DateTypeDef rtc_date_set;
-  rtc_date_set.WeekDay = RTC_WEEKDAY_FRIDAY;
-  rtc_date_set.Date = 12;
-  rtc_date_set.Month = RTC_MONTH_AUGUST;
-  rtc_date_set.Year = 22;
 
-  HAL_RTC_SetTime(&hrtc, &rtc_time_set, RTC_FORMAT_BIN);
-  HAL_RTC_SetDate(&hrtc, &rtc_date_set, RTC_FORMAT_BIN);
-
-  RTC_TimeTypeDef rtc_time;
-  RTC_DateTypeDef rtc_date;
-  time_t t;
-
-  while (1) {
-    HAL_RTC_GetTime(&hrtc, &rtc_time, RTC_FORMAT_BIN);
-    HAL_RTC_GetDate(&hrtc, &rtc_date, RTC_FORMAT_BIN);
-    t = time_from_rtc(rtc_time, rtc_date);
-
-    printf("Time: %d:%d:%d, %d, %d, %d\n",
-           rtc_time.Hours,
-           rtc_time.Minutes,
-           rtc_time.Seconds,
-           rtc_date.Date,
-           rtc_date.Month,
-           rtc_date.Year + 2000);
-    printf(
-      "UNIX Time: %ld\n",
-      (long)
-        t); // Conversion to long (32 bit) should be sufficient for debugging
-
-    osDelay(1000);
+  while (util_str_starts_with(uart_line_buffer, "key=")) {
+    util_usart_readline(uart_line_buffer);
   }
+  util_usart_printf("\n%s\n", uart_line_buffer);
+
+  while (util_str_starts_with(uart_line_buffer, "time=")) {
+    util_usart_readline(uart_line_buffer);
+  }
+  util_usart_printf("\n%s\n", uart_line_buffer);
+
+  // rtc_demo();
 
   /* Infinite loop */
   for (;;) {
