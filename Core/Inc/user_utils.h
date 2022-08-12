@@ -37,7 +37,9 @@ util_esp_read_to_end(AT_RES res);
 int
 util_str_check_startswith(char* str, char* key, int key_size);
 int
-util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size);
+util_str_ends_with(char* str, char* pattern);
+int
+util_str_starts_with(char* str, char* pattern);
 void
 util_display_init();
 void

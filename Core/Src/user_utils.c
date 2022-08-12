@@ -4,14 +4,9 @@
 #define LINE_BUFFER_SIZE 1024
 #define ESP_BUFFER_SIZE 1024
 
-#define STR_ENDS_WITH_OK_CRLF(str)                                             \
-  util_str_ends_with(str, strlen(str), "OK\r\n", strlen("OK\r\n"))
-
-#define STR_ENDS_WITH_ERROR_CRLF(str)                                          \
-  util_str_ends_with(str, strlen(str), "ERROR\r\n", strlen("ERROR\r\n"))
-
-#define STR_ENDS_WITH_READY_CRLF(str)                                          \
-  util_str_ends_with(str, strlen(str), "ready\r\n", strlen("ready\r\n"))
+#define STR_ENDS_WITH_OK_CRLF(str) util_str_ends_with(str, "OK\r\n")
+#define STR_ENDS_WITH_ERROR_CRLF(str) util_str_ends_with(str, "ERROR\r\n")
+#define STR_ENDS_WITH_READY_CRLF(str) util_str_ends_with(str, "ready\r\n")
 
 char uart_line_buffer[LINE_BUFFER_SIZE] = "";
 char uart_esp_1char_buffer[1] = "";
@@ -112,15 +107,20 @@ util_esp_read_to_end(AT_RES res)
 }
 
 int
-util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size)
+util_str_ends_with(char* str, char* pattern)
 {
-  /* e.g. Look for "OK\r\n" */
-  for (int i = 0; i < pattern_size; i++) {
-    if (str[str_size - i] != pattern[pattern_size - i]) {
-      return -1;
-    }
-  }
-  return 0;
+  /* e.g. Look for "OK\r\n"
+   * Reference:
+   * https://stackoverflow.com/questions/4770985/how-to-check-if-a-string-starts-with-another-string-in-c
+   */
+  return strcmp(str + strlen(pattern) - 1, pattern) == 0 ? 0 : -1;
+  // Truncate & align to last characters
+}
+
+int
+util_str_starts_with(char* str, char* pattern)
+{
+  return strncmp(str, pattern, strlen(pattern)) == 0 ? 0 : -1;
 }
 
 void
@@ -146,7 +146,8 @@ util_display_totp(int totp, int time)
   sprintf(totp_text, (totp < 100000 ? "0%d" : "%d"), totp);
 
   /* Draw countdown bar */
-  // TODO Fill bar only on 30s cycle reset, skip this expensive operation during cycles
+  // TODO Fill bar only on 30s cycle reset, skip this expensive operation during
+  // cycles
   setColor(0, 255, 0);
   filledRect(19, 100, 19 + 90 - time * (90 / 30), 110);
   /* Drawing another rectangle to truncate bar on the right end */
