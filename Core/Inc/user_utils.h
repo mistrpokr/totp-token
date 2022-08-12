@@ -41,7 +41,7 @@ util_str_ends_with(char* str, int str_size, char* pattern, int pattern_size);
 void
 util_display_init();
 void
-util_display_totp(int totp);
+util_display_totp(int totp, int time);
 void
 util_display_example(void);
 

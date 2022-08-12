@@ -139,14 +139,23 @@ util_display_init()
 }
 
 void
-util_display_totp(int totp)
+util_display_totp(int totp, int time)
 {
   char totp_text[6] = "";
-  sprintf(totp_text, "%d", totp);
+  /* Pad 0 if only 5-digit */
+  sprintf(totp_text, (totp < 100000 ? "0%d" : "%d"), totp);
+
+  /* Draw countdown bar */
+  // TODO Fill bar only on 30s cycle reset, skip this expensive operation during cycles
+  setColor(0, 255, 0);
+  filledRect(19, 100, 19 + 90 - time * (90 / 30), 110);
+  /* Drawing another rectangle to truncate bar on the right end */
+  setColor(0, 0, 0);
+  filledRect(19 + 90 - time * (90 / 30), 100, 19 + 90, 110);
 
   setColor(255, 255, 255);
   setFont(ter_u24b);
-  drawText(40, 70, totp_text);
+  drawText(30, 70, totp_text);
 
   flushBuffer();
 }

@@ -1,5 +1,7 @@
 #include "crypt.h"
 
+const char* HMAC_DEFAULT_KEY = "hello";
+
 void
 hash_print(byte* hash, int hash_size)
 {

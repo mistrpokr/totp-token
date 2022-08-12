@@ -507,17 +507,18 @@ StartDefaultTask(void* argument)
   util_usart_printf("KEY=%s", HMAC_DEFAULT_KEY);
 
   /* Update epoch time */
-  util_usart_readline(uart_line_buffer);
-  util_usart_printf("\nMessage: %s\n", uart_line_buffer);
+  // util_usart_readline(uart_line_buffer);
+  // util_usart_printf("\nMessage: %s\n", uart_line_buffer);
 
-  epoch_time = atoi(uart_line_buffer);
+  // epoch_time = atoi(uart_line_buffer);
+  epoch_time = 0;
 
   while (1) {
     totp_res = hash_totp_sha1(epoch_time);
 
     util_usart_printf("Epoch Time: %d\n", epoch_time);
     util_usart_printf("TOTP Result: %d\n", totp_res);
-    util_display_totp(totp_res);
+    util_display_totp(totp_res, epoch_time % TIME_STEP);
 
     epoch_time++;
     osDelay(1000);
