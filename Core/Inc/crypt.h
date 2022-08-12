@@ -42,4 +42,4 @@ int
 hash_hotp_sha1(char* hmac_result, int hmac_digest_size, int digits);
 
 int
-hash_totp_sha1(int time);
+hash_totp_sha1(char* key, int time);

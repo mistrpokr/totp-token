@@ -114,6 +114,12 @@ extern "C"
 #define LD2_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 #define MSG_BUF_SIZE 128
+#define max(a, b)                                                              \
+  ({                                                                           \
+    __typeof__(a) _a = (a);                                                    \
+    __typeof__(b) _b = (b);                                                    \
+    _a > _b ? _a : _b;                                                         \
+  })
   /* USER CODE END Private defines */
 
 #ifdef __cplusplus

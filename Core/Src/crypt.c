@@ -110,7 +110,7 @@ hash_hotp_sha1(char* hmac_result, int hmac_digest_size, int digits)
 }
 
 int
-hash_totp_sha1(int time)
+hash_totp_sha1(char* key, int time)
 {
   /* Floor based on time step, e.g. 51 secs => 1 step * 30 secs */
   /* TODO: Inspect floor()'s performance on MCUs, can be substituted with
@@ -125,12 +125,7 @@ hash_totp_sha1(int time)
     steps_in_bytes[7 - i] = ((steps >> 8 * i) & 0xff);
   }
 
-  hash_hmac1(steps_in_bytes,
-             8,
-             HMAC_DEFAULT_KEY,
-             strlen(HMAC_DEFAULT_KEY),
-             hmac_result,
-             SHA_DIGEST_SIZE);
+  hash_hmac1(steps_in_bytes, 8, key, strlen(key), hmac_result, SHA_DIGEST_SIZE);
   // hash_print(hmac_result, SHA_DIGEST_SIZE);
 
   return hash_hotp_sha1(hmac_result, SHA_DIGEST_SIZE, TOTP_DIGITS);

@@ -573,20 +573,25 @@ StartDefaultTask(void* argument)
   /* Update epoch time */
   epoch_time = 0;
   comms_buffer cb;
-  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
-  printf("\nGot: %s\n", cb.buf);
 
+  char key_received[64] = "";
+  time_t time_received = 0U;
+
+  /* Key */
   osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
-  printf("\nGot: %s\n", cb.buf);
+  strncpy(key_received, cb.buf, max(64, MSG_BUF_SIZE));
+  printf("\nGot Key: %s\n", key_received);
+
+  /* Time */
+  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
+  time_received = atol(cb.buf);
+  printf("\nGot Epoch Time: %lu\n", (long)time_received);
 
   while (1) {
-    totp_res = hash_totp_sha1(epoch_time);
+    totp_res = hash_totp_sha1(key_received, time_received);
+    util_display_totp(totp_res, time_received % TIME_STEP);
 
-    // util_usart_printf("Epoch Time: %d\n", epoch_time);
-    // util_usart_printf("TOTP Result: %d\n", totp_res);
-    util_display_totp(totp_res, epoch_time % TIME_STEP);
-
-    epoch_time++;
+    time_received++;
     osDelay(1000);
   }
   for (;;) {

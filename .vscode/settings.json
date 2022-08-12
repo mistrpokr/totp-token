@@ -52,6 +52,8 @@
         "main.h": "c",
         "cmsis_os.h": "c",
         "math.h": "c",
-        "inttypes.h": "c"
+        "inttypes.h": "c",
+        "random": "c",
+        "algorithm": "c"
     },
 }
