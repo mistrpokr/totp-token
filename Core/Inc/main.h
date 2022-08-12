@@ -36,6 +36,7 @@ extern "C"
 #include "esp_at.h"
 #include "st7735s_compat.h"
 #include "user_utils.h"
+#include "time_rtc.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>

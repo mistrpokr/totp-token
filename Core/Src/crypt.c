@@ -116,7 +116,6 @@ hash_totp_sha1(int time)
   /* TODO: Inspect floor()'s performance on MCUs, can be substituted with
    * non-floating point number operation */
   int64_t steps = (int)floor(time / TIME_STEP);
-  printf("%d\n", (int)steps);
 
   byte hmac_result[SHA_DIGEST_SIZE] = "";
 

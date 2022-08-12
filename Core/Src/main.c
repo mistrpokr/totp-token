@@ -59,6 +59,13 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 1024 * 4,
   .priority = (osPriority_t)osPriorityNormal,
 };
+/* Definitions for commsTask */
+osThreadId_t commsTaskHandle;
+const osThreadAttr_t commsTask_attributes = {
+  .name = "commsTask",
+  .stack_size = 1024 * 4,
+  .priority = (osPriority_t)osPriorityNormal,
+};
 /* USER CODE BEGIN PV */
 extern char* esp_read_buf;
 extern char uart_line_buffer[];
@@ -83,6 +90,8 @@ static void
 MX_RTC_Init(void);
 void
 StartDefaultTask(void* argument);
+void
+StartCommsTask(void* argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -156,6 +165,9 @@ main(void)
   /* creation of defaultTask */
   defaultTaskHandle =
     osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of commsTask */
+  commsTaskHandle = osThreadNew(StartCommsTask, NULL, &commsTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -558,8 +570,8 @@ StartDefaultTask(void* argument)
   while (1) {
     totp_res = hash_totp_sha1(epoch_time);
 
-    util_usart_printf("Epoch Time: %d\n", epoch_time);
-    util_usart_printf("TOTP Result: %d\n", totp_res);
+    // util_usart_printf("Epoch Time: %d\n", epoch_time);
+    // util_usart_printf("TOTP Result: %d\n", totp_res);
     util_display_totp(totp_res, epoch_time % TIME_STEP);
 
     epoch_time++;
@@ -569,6 +581,61 @@ StartDefaultTask(void* argument)
     osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartCommsTask */
+/**
+ * @brief Function implementing the commsTask thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartCommsTask */
+void
+StartCommsTask(void* argument)
+{
+  /* USER CODE BEGIN StartCommsTask */
+  RTC_TimeTypeDef rtc_time_set;
+  rtc_time_set.Hours = 19;
+  rtc_time_set.Minutes = 30;
+  rtc_time_set.Seconds = 0;
+  RTC_DateTypeDef rtc_date_set;
+  rtc_date_set.WeekDay = RTC_WEEKDAY_FRIDAY;
+  rtc_date_set.Date = 12;
+  rtc_date_set.Month = RTC_MONTH_AUGUST;
+  rtc_date_set.Year = 22;
+
+  HAL_RTC_SetTime(&hrtc, &rtc_time_set, RTC_FORMAT_BIN);
+  HAL_RTC_SetDate(&hrtc, &rtc_date_set, RTC_FORMAT_BIN);
+
+  RTC_TimeTypeDef rtc_time;
+  RTC_DateTypeDef rtc_date;
+  time_t t;
+
+  while (1) {
+    HAL_RTC_GetTime(&hrtc, &rtc_time, RTC_FORMAT_BIN);
+    HAL_RTC_GetDate(&hrtc, &rtc_date, RTC_FORMAT_BIN);
+    t = time_from_rtc(rtc_time, rtc_date);
+
+    printf("Time: %d:%d:%d, %d, %d, %d\n",
+           rtc_time.Hours,
+           rtc_time.Minutes,
+           rtc_time.Seconds,
+           rtc_date.Date,
+           rtc_date.Month,
+           rtc_date.Year + 2000);
+    printf(
+      "UNIX Time: %ld\n",
+      (long)
+        t); // Conversion to long (32 bit) should be sufficient for debugging
+
+    osDelay(1000);
+  }
+
+  /* Infinite loop */
+  for (;;) {
+    osDelay(1);
+  }
+  /* USER CODE END StartCommsTask */
 }
 
 /**
