@@ -35,8 +35,8 @@ extern "C"
 #include "crypt.h"
 #include "esp_at.h"
 #include "st7735s_compat.h"
-#include "user_utils.h"
 #include "time_rtc.h"
+#include "user_utils.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -112,8 +112,8 @@ extern "C"
 #define SWO_GPIO_Port GPIOB
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
-  /* USER CODE BEGIN Private defines */
-
+/* USER CODE BEGIN Private defines */
+#define MSG_BUF_SIZE 128
   /* USER CODE END Private defines */
 
 #ifdef __cplusplus

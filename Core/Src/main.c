@@ -27,12 +27,15 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef struct comms_buffer_t
+{
+  char buf[MSG_BUF_SIZE];
+} comms_buffer;
 
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BUF_SIZE 4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -66,6 +69,9 @@ const osThreadAttr_t commsTask_attributes = {
   .stack_size = 1024 * 4,
   .priority = (osPriority_t)osPriorityNormal,
 };
+/* Definitions for commsQueue */
+osMessageQueueId_t commsQueueHandle;
+const osMessageQueueAttr_t commsQueue_attributes = { .name = "commsQueue" };
 /* USER CODE BEGIN PV */
 extern char* esp_read_buf;
 extern char uart_line_buffer[];
@@ -156,6 +162,11 @@ main(void)
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* creation of commsQueue */
+  commsQueueHandle =
+    osMessageQueueNew(16, sizeof(comms_buffer), &commsQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -560,11 +571,13 @@ StartDefaultTask(void* argument)
   // util_usart_printf("KEY=%s", HMAC_DEFAULT_KEY);
 
   /* Update epoch time */
-  // util_usart_readline(uart_line_buffer);
-  // util_usart_printf("\nMessage: %s\n", uart_line_buffer);
-
-  // epoch_time = atoi(uart_line_buffer);
   epoch_time = 0;
+  comms_buffer cb;
+  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
+  printf("\nGot: %s\n", cb.buf);
+
+  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
+  printf("\nGot: %s\n", cb.buf);
 
   while (1) {
     totp_res = hash_totp_sha1(epoch_time);
@@ -593,16 +606,23 @@ void
 StartCommsTask(void* argument)
 {
   /* USER CODE BEGIN StartCommsTask */
+  comms_buffer cb_send;
+  const char data_start_key[] = "key=";
+  const char data_start_time[] = "time=";
 
-  while (util_str_starts_with(uart_line_buffer, "key=")) {
+  while (util_str_starts_with(uart_line_buffer, data_start_key)) {
     util_usart_readline(uart_line_buffer);
   }
   util_usart_printf("\n%s\n", uart_line_buffer);
+  strcpy(cb_send.buf, uart_line_buffer + strlen(data_start_key));
+  osMessageQueuePut(commsQueueHandle, cb_send.buf, NULL, osWaitForever);
 
-  while (util_str_starts_with(uart_line_buffer, "time=")) {
+  while (util_str_starts_with(uart_line_buffer, data_start_time)) {
     util_usart_readline(uart_line_buffer);
   }
   util_usart_printf("\n%s\n", uart_line_buffer);
+  strcpy(cb_send.buf, uart_line_buffer + strlen(data_start_time));
+  osMessageQueuePut(commsQueueHandle, cb_send.buf, NULL, osWaitForever);
 
   // rtc_demo();
 
