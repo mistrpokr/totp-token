@@ -3,24 +3,34 @@
         {
             "name": "nucleo-stm32f412",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/arm-none-eabi/include"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
                 "STM32F412Zx",
                 "__GNUC__"
             ],
-            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "compilerPath": "/Applications/ARM/bin/arm-none-eabi-gcc",
             "cStandard": "c99",
             "cppStandard": "c++14",
-            "intelliSenseMode": "linux-gcc-arm",
+            "intelliSenseMode": "macos-gcc-arm",
             "compilerArgs": [
                 "-std c99"
             ],
-            "compileCommands": "${workspaceFolder}/compile_commands.json",
+            // "compileCommands": "${workspaceFolder}/compile_commands.json",
             "forcedInclude": [
-                "wolfSSL/wolfSSL.I-CUBE-wolfSSL_conf.h"
-            ]
+                "wolfSSL/wolfSSL.I-CUBE-wolfSSL_conf.h",
+                "/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/arm-none-eabi/include/stdint.h"
+            ],
+            "mergeConfigurations": false,
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/arm-none-eabi/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
         }
     ],
     "version": 4

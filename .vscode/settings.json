@@ -48,6 +48,10 @@
         "system_error": "c",
         "utility": "c",
         "variant": "c",
-        "*.inc": "c"
+        "*.inc": "c",
+        "main.h": "c",
+        "cmsis_os.h": "c",
+        "math.h": "c",
+        "inttypes.h": "c"
     },
 }
