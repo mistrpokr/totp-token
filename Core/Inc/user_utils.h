@@ -43,7 +43,7 @@ util_str_starts_with(char* str, char* pattern);
 void
 util_display_init();
 void
-util_display_totp(int totp, int time);
+util_display_totp(int totp, int time, long epoch);
 void
 util_display_example(void);
 

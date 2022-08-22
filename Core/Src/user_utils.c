@@ -139,7 +139,7 @@ util_display_init()
 }
 
 void
-util_display_totp(int totp, int time)
+util_display_totp(int totp, int time, long epoch)
 {
   char totp_text[6] = "";
   /* Pad 0 if only 5-digit */
@@ -157,6 +157,11 @@ util_display_totp(int totp, int time)
   setColor(255, 255, 255);
   setFont(ter_u24b);
   drawText(30, 70, totp_text);
+
+  setFont(ter_u12b);
+  char time_text[32] = "";
+  sprintf(time_text, "%lu", epoch);
+  drawText(40, 20, time_text);
 
   flushBuffer();
 }

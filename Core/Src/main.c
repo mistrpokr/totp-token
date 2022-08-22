@@ -449,7 +449,7 @@ MX_USART3_UART_Init(void)
 
   /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 115200;
+  huart3.Init.BaudRate = 9600;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;
@@ -589,7 +589,7 @@ StartDefaultTask(void* argument)
 
   while (1) {
     totp_res = hash_totp_sha1(key_received, time_received);
-    util_display_totp(totp_res, time_received % TIME_STEP);
+    util_display_totp(totp_res, time_received % TIME_STEP, (long)time_received);
 
     time_received++;
     osDelay(1000);
