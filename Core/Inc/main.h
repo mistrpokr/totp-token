@@ -32,6 +32,7 @@ extern "C"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "circular_buffer.h"
 #include "crypt.h"
 #include "esp_at.h"
 #include "st7735s_compat.h"
@@ -40,6 +41,7 @@ extern "C"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+
 
   /* USER CODE END Includes */
 

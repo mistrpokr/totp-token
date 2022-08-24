@@ -562,6 +562,15 @@ StartDefaultTask(void* argument)
   /* USER CODE BEGIN 5 */
   util_display_init();
 
+  cb_init(&uart_c_buffer);
+  uint8_t string_src[] = "01234567";
+  uint8_t string_dest[1024] = "";
+  cb_put(&uart_c_buffer, strlen(string_src), string_src);
+  cb_get(&uart_c_buffer, cb_len(&uart_c_buffer), string_dest);
+  cb_put(&uart_c_buffer, strlen("abcdefgh"), "abcdefgh");
+  cb_put(&uart_c_buffer, strlen("ijklmnopq"), "ijklmnopq");
+  cb_get(&uart_c_buffer, cb_len(&uart_c_buffer), string_dest);
+
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
   byte hmac1_digest[SHA_DIGEST_SIZE] = "";
   char hmac1_digest_formatted[SHA_DIGEST_SIZE * 2] = "";
