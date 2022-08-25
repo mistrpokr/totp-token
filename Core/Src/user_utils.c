@@ -1,5 +1,4 @@
 #include "user_utils.h"
-#include "esp_at.h"
 
 #define LINE_BUFFER_SIZE 1024
 #define ESP_BUFFER_SIZE 1024

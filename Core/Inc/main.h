@@ -34,7 +34,6 @@ extern "C"
 /* USER CODE BEGIN Includes */
 #include "circular_buffer.h"
 #include "crypt.h"
-#include "esp_at.h"
 #include "st7735s_compat.h"
 #include "time_rtc.h"
 #include "user_utils.h"
