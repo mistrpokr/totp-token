@@ -18,7 +18,6 @@
             "compilerArgs": [
                 "-std c99"
             ],
-            // "compileCommands": "${workspaceFolder}/compile_commands.json",
             "forcedInclude": [
                 "wolfSSL/wolfSSL.I-CUBE-wolfSSL_conf.h",
                 "/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/arm-none-eabi/include/stdint.h"
@@ -30,7 +29,8 @@
                     "/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/arm-none-eabi/include"
                 ],
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "compileCommands": "${workspaceFolder}/compile_commands.json"
         }
     ],
     "version": 4

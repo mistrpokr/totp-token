@@ -42,6 +42,7 @@ Core/Src/user_utils.c \
 Core/Src/crypt.c \
 Core/Src/esp_at.c \
 Core/Src/time_rtc.c \
+Core/Src/circular_buffer.c \
 Core/Src/stm32f4xx_it.c \
 Core/Src/stm32f4xx_hal_msp.c \
 Core/Src/stm32f4xx_hal_timebase_tim.c \

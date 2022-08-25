@@ -11,7 +11,12 @@ cb_init(circular_buffer* cb)
 int
 cb_len(circular_buffer* cb)
 {
-  return cb->tail - cb->head;
+  return (cb->tail % CIRCULAR_BUFFER_SIZE) - (cb->head % CIRCULAR_BUFFER_SIZE);
+}
+int
+cb_empty(circular_buffer* cb)
+{
+  return (cb->tail % CIRCULAR_BUFFER_SIZE) == (cb->head % CIRCULAR_BUFFER_SIZE);
 }
 int
 cb_get(circular_buffer* cb, int bytes, uint8_t* dest_addr)
@@ -40,4 +45,9 @@ cb_put(circular_buffer* cb, int bytes, uint8_t* src_addr)
     cb->buffer[(cb->tail++) % CIRCULAR_BUFFER_SIZE] = *(src_addr + i);
   }
   return 1;
+}
+uint8_t
+cb_read(circular_buffer* cb, int pos)
+{
+  return cb->buffer[pos % CIRCULAR_BUFFER_SIZE];
 }

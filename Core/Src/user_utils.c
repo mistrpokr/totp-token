@@ -9,6 +9,7 @@
 #define STR_ENDS_WITH_READY_CRLF(str) util_str_ends_with(str, "ready\r\n")
 
 char uart_line_buffer[LINE_BUFFER_SIZE] = "";
+char uart_1char_buffer[1] = "";
 char uart_esp_1char_buffer[1] = "";
 char uart_esp_stream_buffer[ESP_BUFFER_SIZE] = "";
 int uart_esp_stream_ptr = 0;
@@ -33,31 +34,32 @@ HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
     // }
     /* Receive next character */
     HAL_UART_Receive_IT(huart, uart_esp_1char_buffer, 1);
+  } else if (huart == &huart3) {
+    cb_put(&uart_c_buffer, 1, uart_1char_buffer);
+    HAL_UART_Receive_IT(huart, uart_1char_buffer, 1);
   }
 }
 
 void
 util_usart_printstr(char* str)
 {
-  HAL_UART_Transmit(&huart3, str, strlen((char*)str), HAL_MAX_DELAY);
+  HAL_UART_Transmit_IT(&huart3, str, strlen((char*)str));
 }
 
 void
 util_usart_readline(char* str)
 {
-  int p = 0;
-  char buf[1] = { '\0' };
+  HAL_UART_Receive_IT(&huart3, uart_1char_buffer, 1);
 
-  *str = '\0';
-  *(str + 1) = '\0';
-  while (*buf != '\n' && *buf != '\r') {
-    int res = HAL_UART_Receive(&huart3, buf, 1, HAL_MAX_DELAY);
-
-    str[p++] = *buf;
-    HAL_UART_Transmit(&huart3, buf, 1, HAL_MAX_DELAY);
+  while (!(cb_empty(&uart_c_buffer) != 1 &&
+           (cb_read(&uart_c_buffer, uart_c_buffer.tail - 1) == '\n' ||
+            cb_read(&uart_c_buffer, uart_c_buffer.tail - 1) == '\r'))) {
+    /* Wait until: circular buffer ends with a EOL character AND buffer is not empty */
   }
 
-  str[p - 1] = '\0'; // Remove CR/LF
+  uint8_t read_cbuf[CIRCULAR_BUFFER_SIZE] = "";
+  cb_get(&uart_c_buffer, CIRCULAR_BUFFER_SIZE, read_cbuf);
+  util_usart_printstr(read_cbuf);
 }
 
 void

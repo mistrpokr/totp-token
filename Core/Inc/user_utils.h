@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "circular_buffer.h"
 #include "esp_at.h"
 #include "fonts.h"
 #include "gfx.h"
