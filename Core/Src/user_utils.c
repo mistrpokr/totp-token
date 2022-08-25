@@ -249,17 +249,19 @@ util_parse_conf(char* raw, int str_len)
   while (raw[p++] != ';') {
     if (raw[p] == '&') {
       util_parse_segment(raw, last, p - 1);
-      last = p;
+      last = p + 1;
     }
   }
-  util_parse_segment(raw, last, p - 1);
+  util_parse_segment(raw, last, p - 2);
 };
 
 void
 util_parse_segment(char* raw, int start, int end)
 {
-  // for (int i = start; i <= end; i++) {
-  //   printf("%c", raw[i]);
-  // }
-  // printf("\n");
+  for (int i = start; i <= end; i++) {
+    if (util_str_starts_with(raw, "time")) {
+    }
+    printf("%c", raw[i]);
+  }
+  printf("\n");
 }
