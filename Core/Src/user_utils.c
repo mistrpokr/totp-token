@@ -54,12 +54,14 @@ util_usart_readline(char* str)
   while (!(cb_empty(&uart_c_buffer) != 1 &&
            (cb_read(&uart_c_buffer, uart_c_buffer.tail - 1) == '\n' ||
             cb_read(&uart_c_buffer, uart_c_buffer.tail - 1) == '\r'))) {
-    /* Wait until: circular buffer ends with a EOL character AND buffer is not empty */
+    /* Wait until: circular buffer ends with a EOL character AND buffer is not
+     * empty */
   }
 
-  uint8_t read_cbuf[CIRCULAR_BUFFER_SIZE] = "";
-  cb_get(&uart_c_buffer, CIRCULAR_BUFFER_SIZE, read_cbuf);
-  util_usart_printstr(read_cbuf);
+  int len = cb_len(&uart_c_buffer);
+  cb_get(&uart_c_buffer, len, str);
+  str[len] = '\0';
+  util_usart_printf("%s\n", str);
 }
 
 void
