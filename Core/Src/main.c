@@ -27,10 +27,10 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef struct comms_buffer_t
+typedef struct data_queue_t
 {
   char buf[MSG_BUF_SIZE];
-} comms_buffer;
+} data_queue;
 
 /* USER CODE END PTD */
 
@@ -167,7 +167,7 @@ main(void)
   /* Create the queue(s) */
   /* creation of commsQueue */
   commsQueueHandle =
-    osMessageQueueNew(16, sizeof(comms_buffer), &commsQueue_attributes);
+    osMessageQueueNew(16, sizeof(data_queue), &commsQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -450,7 +450,7 @@ MX_USART3_UART_Init(void)
 
   /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 9600;
+  huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;
@@ -563,17 +563,6 @@ StartDefaultTask(void* argument)
   /* USER CODE BEGIN 5 */
   util_display_init();
 
-  // cb_init(&uart_c_buffer);
-  // uint8_t string_src[] = "01234567";
-  // uint8_t string_dest[1024] = "";
-  // cb_put(&uart_c_buffer, strlen(string_src), string_src);
-  // cb_get(&uart_c_buffer, cb_len(&uart_c_buffer), string_dest);
-  // cb_put(&uart_c_buffer, strlen("abcdefgh"), "abcdefgh");
-  // cb_put(&uart_c_buffer, strlen("abcdefgh"), "abcdefgh");
-  // cb_put(&uart_c_buffer, strlen("abcdefgh"), "abcdefgh");
-  // cb_put(&uart_c_buffer, strlen("12345678"), "12345678");
-  // cb_get(&uart_c_buffer, cb_len(&uart_c_buffer), string_dest);
-
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
   byte hmac1_digest[SHA_DIGEST_SIZE] = "";
   char hmac1_digest_formatted[SHA_DIGEST_SIZE * 2] = "";
@@ -584,19 +573,19 @@ StartDefaultTask(void* argument)
 
   /* Update epoch time */
   epoch_time = 0;
-  comms_buffer cb;
+  data_queue dqueue;
 
   char key_received[64] = "";
   time_t time_received = 0U;
 
   /* Key */
-  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
-  strncpy(key_received, cb.buf, max(64, MSG_BUF_SIZE));
+  osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
+  strncpy(key_received, dqueue.buf, max(64, MSG_BUF_SIZE));
   printf("\nGot Key: %s\n", key_received);
 
   /* Time */
-  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
-  time_received = atol(cb.buf);
+  osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
+  time_received = atol(dqueue.buf);
   printf("\nGot Epoch Time: %lu\n", (long)time_received);
 
   while (1) {
@@ -623,7 +612,7 @@ void
 StartCommsTask(void* argument)
 {
   /* USER CODE BEGIN StartCommsTask */
-  comms_buffer cb_send;
+  data_queue cb_send;
   const char data_start_key[] = "key=";
   const char data_start_time[] = "time=";
 

@@ -1,7 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
 FREERTOS.IPParameters=Tasks01,FootprintOK,Queues01
-FREERTOS.Queues01=commsQueue,16,comms_buffer,0,Dynamic,NULL,NULL
+FREERTOS.Queues01=commsQueue,16,data_queue,0,Dynamic,NULL,NULL
 FREERTOS.Tasks01=defaultTask,24,1024,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL;commsTask,24,1024,StartCommsTask,Default,NULL,Dynamic,NULL,NULL
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
@@ -214,7 +214,7 @@ ProjectManager.StackSize=0x400
 ProjectManager.TargetToolchain=Makefile
 ProjectManager.ToolChainLocation=
 ProjectManager.UnderRoot=false
-ProjectManager.functionlistsort=1-SystemClock_Config-RCC-false-HAL-false,2-MX_GPIO_Init-GPIO-false-HAL-true,3-MX_USART3_UART_Init-USART3-false-HAL-true,4-MX_RNG_Init-RNG-false-HAL-true,5-MX_USART2_UART_Init-USART2-false-HAL-true,6-MX_SPI1_Init-SPI1-false-HAL-true,7-MX_TIM3_Init-TIM3-false-HAL-true
+ProjectManager.functionlistsort=1-SystemClock_Config-RCC-false-HAL-false,2-MX_GPIO_Init-GPIO-false-HAL-true,3-MX_USART3_UART_Init-USART3-false-HAL-true,4-MX_RNG_Init-RNG-false-HAL-true,5-MX_USART2_UART_Init-USART2-false-HAL-true,6-MX_SPI1_Init-SPI1-false-HAL-true,7-MX_TIM3_Init-TIM3-false-HAL-true,8-MX_RTC_Init-RTC-false-HAL-true
 RCC.48MHZClocksFreq_Value=24000000
 RCC.ADC12outputFreq_Value=72000000
 RCC.ADC34outputFreq_Value=72000000

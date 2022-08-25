@@ -42,7 +42,6 @@ extern "C"
 #include <stdio.h>
 #include <string.h>
 
-
   /* USER CODE END Includes */
 
   /* Exported types
