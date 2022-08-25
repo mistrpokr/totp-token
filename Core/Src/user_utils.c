@@ -273,8 +273,8 @@ util_parse_segment(char* raw, int start, int end)
 
     strncpy(service.name, split_equal + 1, name_len);
     strncpy(service.key, split_comma + 1, key_len);
-    service.name[name_len + 1] = '\0';
-    service.key[key_len + 1] = '\0';
+    service.name[name_len] = '\0';
+    service.key[key_len] = '\0';
 
     printf("Service: %s,%s;", service.name, service.key);
   }
