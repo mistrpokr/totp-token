@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "circular_buffer.h"
+#include "crypt.h"
 #include "fonts.h"
 #include "gfx.h"
 #include "st7735s.h"
@@ -51,9 +52,13 @@ util_display_init();
 void
 util_display_totp(int totp, int time, long epoch);
 void
+util_display_totp_multi(totp_service* service_list, int count);
+void
 util_display_example(void);
 void
 util_parse_conf(char* raw, int str_len);
 void
 util_parse_segment(char* raw, int start, int end);
+int
+util_totp_from_service(totp_service* service);
 #endif

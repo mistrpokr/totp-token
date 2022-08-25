@@ -75,6 +75,9 @@ const osMessageQueueAttr_t commsQueue_attributes = { .name = "commsQueue" };
 /* USER CODE BEGIN PV */
 extern char* esp_read_buf;
 extern char uart_line_buffer[];
+extern totp_service service_list[];
+extern int service_count;
+extern long epoch_global;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -588,10 +591,13 @@ StartDefaultTask(void* argument)
   // printf("[STM32F412ZG]\r\n");
 
   while (1) {
-    totp_res = hash_totp_sha1(conf_raw, time_received);
-    util_display_totp(totp_res, time_received % TIME_STEP, (long)time_received);
+    // int totp1 = hash_totp_sha1(service_list[1].key, time_received);
+    // int totp2 = hash_totp_sha1(service_list[2].key, time_received);
+    // util_display_totp_multi(
+    //   totp1, totp2, time_received % TIME_STEP, epoch_global);
 
-    time_received++;
+    util_display_totp_multi(service_list, service_count);
+    epoch_global++;
     osDelay(1000);
   }
   for (;;) {

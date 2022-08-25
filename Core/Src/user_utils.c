@@ -16,6 +16,10 @@ char* esp_read_buf; // Pointer to buffer returned by util_esp_read*
 
 const char crlf[] = "\r\n";
 
+long epoch_global = 0;
+totp_service service_list[32];
+int service_count = 0;
+
 void
 HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
@@ -170,6 +174,42 @@ util_display_totp(int totp, int time, long epoch)
 }
 
 void
+util_display_totp_multi(totp_service* service_list, int count)
+{
+  int time = epoch_global % TIME_STEP;
+  int totp = 0;
+  char totp_text[6] = "";
+  /* Pad 0 if only 5-digit */
+
+  /* Draw countdown bar */
+  // TODO Fill bar only on 30s cycle reset, skip
+  // this expensive operation during cycles
+  setColor(0, 255, 0);
+  filledRect(19, 100, 19 + 90 - time * (90 / 30), 110);
+  /* Drawing another rectangle to truncate bar on the right end */
+  setColor(0, 0, 0);
+  filledRect(19 + 90 - time * (90 / 30), 100, 19 + 90, 110);
+
+  setColor(255, 255, 255);
+  setFont(ter_u12b);
+  for (int i = 0; i < count; i++) {
+    totp = util_totp_from_service(&service_list[i]);
+    sprintf(totp_text,
+            (totp < 100000 ? "%s: 0%d" : "%s: %d"),
+            service_list[i].name,
+            totp);
+    drawText(20, 40 + i * 20, totp_text);
+  }
+
+  setFont(ter_u12b);
+  char time_text[32] = "";
+  sprintf(time_text, "%lu", epoch_global);
+  drawText(40, 20, time_text);
+
+  flushBuffer();
+}
+
+void
 util_display_example(void)
 {
   ST7735S_Init();
@@ -262,22 +302,29 @@ util_parse_segment(char* raw, int start, int end)
   if (util_str_starts_with(segment, "time") == 0) {
     segment[end + 1] = '\0'; // ‘&’ => '\0'
     long epoch = atol(strchr(segment, '=') + 1);
+    epoch_global = epoch;
     printf("Epoch=%lu", epoch);
   } else if (util_str_starts_with(segment, "service") == 0) {
     char* split_equal = strchr(segment, '=');
     char* split_comma = strchr(segment, ',');
 
-    totp_service service;
+    totp_service* service = &service_list[service_count++];
     int name_len = split_comma - split_equal - 1;
-    int key_len = (end - start) - (split_comma - (raw + start)) - 1;
+    int key_len = (end - start) - (split_comma - (raw + start));
 
-    strncpy(service.name, split_equal + 1, name_len);
-    strncpy(service.key, split_comma + 1, key_len);
-    service.name[name_len] = '\0';
-    service.key[key_len] = '\0';
+    strncpy(service->name, split_equal + 1, name_len);
+    strncpy(service->key, split_comma + 1, key_len);
+    service->name[name_len] = '\0';
+    service->key[key_len] = '\0';
 
-    printf("Service: %s,%s;", service.name, service.key);
+    printf("Service: %s,%s;", service->name, service->key);
   }
 
   printf("\n");
+}
+
+int
+util_totp_from_service(totp_service* service)
+{
+  return hash_totp_sha1(service->key, epoch_global);
 }
