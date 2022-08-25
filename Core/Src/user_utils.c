@@ -258,10 +258,27 @@ util_parse_conf(char* raw, int str_len)
 void
 util_parse_segment(char* raw, int start, int end)
 {
-  for (int i = start; i <= end; i++) {
-    if (util_str_starts_with(raw, "time")) {
-    }
-    printf("%c", raw[i]);
+  char* segment = raw + start;
+
+  if (util_str_starts_with(segment, "time") == 0) {
+    segment[end + 1] = '\0'; // ‘&’ => '\0'
+    long epoch = atol(strchr(segment, '=') + 1);
+    printf("Epoch=%lu", epoch);
+  } else if (util_str_starts_with(segment, "service") == 0) {
+    char* split_equal = strchr(segment, '=');
+    char* split_comma = strchr(segment, ',');
+
+    totp_service service;
+    int name_len = split_comma - split_equal - 1;
+    int key_len = (end - start) - (split_comma - (raw + start)) - 1;
+
+    strncpy(service.name, split_equal + 1, name_len);
+    strncpy(service.key, split_comma + 1, key_len);
+    service.name[name_len + 1] = '\0';
+    service.key[key_len + 1] = '\0';
+
+    printf("Service: %s,%s;", service.name, service.key);
   }
+
   printf("\n");
 }

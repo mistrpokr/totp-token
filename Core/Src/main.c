@@ -616,7 +616,7 @@ StartCommsTask(void* argument)
   const char data_start_time[] = "time=";
   const char conf_start[] = "?";
 
-  while (util_str_starts_with(uart_line_buffer, conf_start)) {
+  while (util_str_starts_with(uart_line_buffer, conf_start) != 0) {
     util_usart_readline(uart_line_buffer);
   }
   util_usart_printf("\n%s\n", uart_line_buffer);
