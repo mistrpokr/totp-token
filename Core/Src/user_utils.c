@@ -239,3 +239,27 @@ util_display_example(void)
     flushBuffer();
   }
 }
+
+void
+util_parse_conf(char* raw, int str_len)
+{
+  // ?time=1034134&service=github,1431jck3&service=weibo,jk13k4k;
+  int p = 0;
+  int last = 0;
+  while (raw[p++] != ';') {
+    if (raw[p] == '&') {
+      util_parse_segment(raw, last, p - 1);
+      last = p;
+    }
+  }
+  util_parse_segment(raw, last, p - 1);
+};
+
+void
+util_parse_segment(char* raw, int start, int end)
+{
+  // for (int i = start; i <= end; i++) {
+  //   printf("%c", raw[i]);
+  // }
+  // printf("\n");
+}

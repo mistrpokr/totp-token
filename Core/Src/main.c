@@ -575,21 +575,20 @@ StartDefaultTask(void* argument)
   epoch_time = 0;
   data_queue dqueue;
 
-  char key_received[64] = "";
+  char conf_raw[1024] = "";
   time_t time_received = 0U;
 
-  /* Key */
+  /* Get conf */
   osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
-  strncpy(key_received, dqueue.buf, max(64, MSG_BUF_SIZE));
-  printf("\nGot Key: %s\n", key_received);
+  strncpy(conf_raw, dqueue.buf, max(64, MSG_BUF_SIZE));
+  printf("\nGot conf text: %s\n", conf_raw);
 
-  /* Time */
-  osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
-  time_received = atol(dqueue.buf);
-  printf("\nGot Epoch Time: %lu\n", (long)time_received);
+  totp_service service;
+  util_parse_conf(conf_raw, strlen(conf_raw));
+  // printf("[STM32F412ZG]\r\n");
 
   while (1) {
-    totp_res = hash_totp_sha1(key_received, time_received);
+    totp_res = hash_totp_sha1(conf_raw, time_received);
     util_display_totp(totp_res, time_received % TIME_STEP, (long)time_received);
 
     time_received++;
@@ -612,23 +611,17 @@ void
 StartCommsTask(void* argument)
 {
   /* USER CODE BEGIN StartCommsTask */
-  data_queue cb_send;
+  data_queue dqueue;
   const char data_start_key[] = "key=";
   const char data_start_time[] = "time=";
+  const char conf_start[] = "?";
 
-  while (util_str_starts_with(uart_line_buffer, data_start_key)) {
+  while (util_str_starts_with(uart_line_buffer, conf_start)) {
     util_usart_readline(uart_line_buffer);
   }
   util_usart_printf("\n%s\n", uart_line_buffer);
-  strcpy(cb_send.buf, uart_line_buffer + strlen(data_start_key));
-  osMessageQueuePut(commsQueueHandle, cb_send.buf, NULL, osWaitForever);
-
-  while (util_str_starts_with(uart_line_buffer, data_start_time)) {
-    util_usart_readline(uart_line_buffer);
-  }
-  util_usart_printf("\n%s\n", uart_line_buffer);
-  strcpy(cb_send.buf, uart_line_buffer + strlen(data_start_time));
-  osMessageQueuePut(commsQueueHandle, cb_send.buf, NULL, osWaitForever);
+  strcpy(dqueue.buf, uart_line_buffer + strlen(conf_start));
+  osMessageQueuePut(commsQueueHandle, dqueue.buf, NULL, osWaitForever);
 
   // rtc_demo();
 

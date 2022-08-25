@@ -22,6 +22,12 @@ typedef enum AT_RES_ENUM
   AT_READY = 2,
 } AT_RES;
 
+typedef struct totp_service_t
+{
+  char name[128];
+  char key[64];
+} totp_service;
+
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart2;
 
@@ -47,5 +53,8 @@ void
 util_display_totp(int totp, int time, long epoch);
 void
 util_display_example(void);
-
+void
+util_parse_conf(char* raw, int str_len);
+void
+util_parse_segment(char* raw, int start, int end);
 #endif
