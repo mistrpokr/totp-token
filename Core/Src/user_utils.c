@@ -192,7 +192,7 @@ util_display_totp_multi(totp_service* service_list, int count)
 
   setColor(255, 255, 255);
   setFont(ter_u12b);
-  for (int i = 0; i < count; i++) {
+  for (int i = 0; i < (count > 3 ? 3 : count); i++) { // Truncate to first 3 services for now
     totp = util_totp_from_service(&service_list[i]);
     snprintf(totp_text,
              SERVICE_DISP_LEN,
