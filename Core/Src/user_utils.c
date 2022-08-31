@@ -178,7 +178,7 @@ util_display_totp_multi(totp_service* service_list, int count)
 {
   int time = epoch_global % TIME_STEP;
   int totp = 0;
-  char totp_text[6] = "";
+  char totp_text[SERVICE_DISP_LEN] = "";
   /* Pad 0 if only 5-digit */
 
   /* Draw countdown bar */
@@ -194,10 +194,11 @@ util_display_totp_multi(totp_service* service_list, int count)
   setFont(ter_u12b);
   for (int i = 0; i < count; i++) {
     totp = util_totp_from_service(&service_list[i]);
-    sprintf(totp_text,
-            (totp < 100000 ? "%s: 0%d" : "%s: %d"),
-            service_list[i].name,
-            totp);
+    snprintf(totp_text,
+             SERVICE_DISP_LEN,
+             (totp < 100000 ? "%.8s: 0%d" : "%.8s: %d"),
+             service_list[i].name,
+             totp);
     drawText(20, 40 + i * 20, totp_text);
   }
 

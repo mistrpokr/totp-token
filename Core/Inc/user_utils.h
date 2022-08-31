@@ -15,6 +15,8 @@
 
 #define util_usart_printf printf
 
+#define SERVICE_DISP_LEN 24
+
 typedef enum AT_RES_ENUM
 {
   AT_OK = 0,
