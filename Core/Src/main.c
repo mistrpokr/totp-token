@@ -170,7 +170,7 @@ main(void)
   /* Create the queue(s) */
   /* creation of commsQueue */
   commsQueueHandle =
-    osMessageQueueNew(16, sizeof(data_queue), &commsQueue_attributes);
+    osMessageQueueNew(4, sizeof(data_queue), &commsQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -591,11 +591,6 @@ StartDefaultTask(void* argument)
   // printf("[STM32F412ZG]\r\n");
 
   while (1) {
-    // int totp1 = hash_totp_sha1(service_list[1].key, time_received);
-    // int totp2 = hash_totp_sha1(service_list[2].key, time_received);
-    // util_display_totp_multi(
-    //   totp1, totp2, time_received % TIME_STEP, epoch_global);
-
     util_display_totp_multi(service_list, service_count);
     epoch_global++;
     osDelay(1000);
