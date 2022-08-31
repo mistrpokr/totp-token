@@ -27,10 +27,10 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef struct comms_buffer_t
+typedef struct data_queue_t
 {
   char buf[MSG_BUF_SIZE];
-} comms_buffer;
+} data_queue;
 
 /* USER CODE END PTD */
 
@@ -75,6 +75,9 @@ const osMessageQueueAttr_t commsQueue_attributes = { .name = "commsQueue" };
 /* USER CODE BEGIN PV */
 extern char* esp_read_buf;
 extern char uart_line_buffer[];
+extern totp_service service_list[];
+extern int service_count;
+extern long epoch_global;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -167,7 +170,7 @@ main(void)
   /* Create the queue(s) */
   /* creation of commsQueue */
   commsQueueHandle =
-    osMessageQueueNew(16, sizeof(comms_buffer), &commsQueue_attributes);
+    osMessageQueueNew(4, sizeof(data_queue), &commsQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -450,7 +453,7 @@ MX_USART3_UART_Init(void)
 
   /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 9600;
+  huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;
@@ -563,17 +566,6 @@ StartDefaultTask(void* argument)
   /* USER CODE BEGIN 5 */
   util_display_init();
 
-  // cb_init(&uart_c_buffer);
-  // uint8_t string_src[] = "01234567";
-  // uint8_t string_dest[1024] = "";
-  // cb_put(&uart_c_buffer, strlen(string_src), string_src);
-  // cb_get(&uart_c_buffer, cb_len(&uart_c_buffer), string_dest);
-  // cb_put(&uart_c_buffer, strlen("abcdefgh"), "abcdefgh");
-  // cb_put(&uart_c_buffer, strlen("abcdefgh"), "abcdefgh");
-  // cb_put(&uart_c_buffer, strlen("abcdefgh"), "abcdefgh");
-  // cb_put(&uart_c_buffer, strlen("12345678"), "12345678");
-  // cb_get(&uart_c_buffer, cb_len(&uart_c_buffer), string_dest);
-
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
   byte hmac1_digest[SHA_DIGEST_SIZE] = "";
   char hmac1_digest_formatted[SHA_DIGEST_SIZE * 2] = "";
@@ -584,26 +576,23 @@ StartDefaultTask(void* argument)
 
   /* Update epoch time */
   epoch_time = 0;
-  comms_buffer cb;
+  data_queue dqueue;
 
-  char key_received[64] = "";
+  char conf_raw[1024] = "";
   time_t time_received = 0U;
 
-  /* Key */
-  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
-  strncpy(key_received, cb.buf, max(64, MSG_BUF_SIZE));
-  printf("\nGot Key: %s\n", key_received);
+  /* Get conf */
+  osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
+  strncpy(conf_raw, dqueue.buf, max(64, MSG_BUF_SIZE));
+  printf("\nGot conf text: %s\n", conf_raw);
 
-  /* Time */
-  osMessageQueueGet(commsQueueHandle, &cb, NULL, osWaitForever);
-  time_received = atol(cb.buf);
-  printf("\nGot Epoch Time: %lu\n", (long)time_received);
+  totp_service service;
+  util_parse_conf(conf_raw, strlen(conf_raw));
+  // printf("[STM32F412ZG]\r\n");
 
   while (1) {
-    totp_res = hash_totp_sha1(key_received, time_received);
-    util_display_totp(totp_res, time_received % TIME_STEP, (long)time_received);
-
-    time_received++;
+    util_display_totp_multi(service_list, service_count);
+    epoch_global++;
     osDelay(1000);
   }
   for (;;) {
@@ -623,23 +612,17 @@ void
 StartCommsTask(void* argument)
 {
   /* USER CODE BEGIN StartCommsTask */
-  comms_buffer cb_send;
+  data_queue dqueue;
   const char data_start_key[] = "key=";
   const char data_start_time[] = "time=";
+  const char conf_start[] = "?";
 
-  while (util_str_starts_with(uart_line_buffer, data_start_key)) {
+  while (util_str_starts_with(uart_line_buffer, conf_start) != 0) {
     util_usart_readline(uart_line_buffer);
   }
   util_usart_printf("\n%s\n", uart_line_buffer);
-  strcpy(cb_send.buf, uart_line_buffer + strlen(data_start_key));
-  osMessageQueuePut(commsQueueHandle, cb_send.buf, NULL, osWaitForever);
-
-  while (util_str_starts_with(uart_line_buffer, data_start_time)) {
-    util_usart_readline(uart_line_buffer);
-  }
-  util_usart_printf("\n%s\n", uart_line_buffer);
-  strcpy(cb_send.buf, uart_line_buffer + strlen(data_start_time));
-  osMessageQueuePut(commsQueueHandle, cb_send.buf, NULL, osWaitForever);
+  strcpy(dqueue.buf, uart_line_buffer + strlen(conf_start));
+  osMessageQueuePut(commsQueueHandle, dqueue.buf, NULL, osWaitForever);
 
   // rtc_demo();
 

@@ -34,14 +34,12 @@ extern "C"
 /* USER CODE BEGIN Includes */
 #include "circular_buffer.h"
 #include "crypt.h"
-#include "esp_at.h"
 #include "st7735s_compat.h"
 #include "time_rtc.h"
 #include "user_utils.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-
 
   /* USER CODE END Includes */
 
@@ -115,7 +113,7 @@ extern "C"
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-#define MSG_BUF_SIZE 128
+#define MSG_BUF_SIZE 1024
 #define max(a, b)                                                              \
   ({                                                                           \
     __typeof__(a) _a = (a);                                                    \

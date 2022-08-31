@@ -55,6 +55,9 @@
         "inttypes.h": "c",
         "random": "c",
         "algorithm": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "st7735s.h": "c",
+        "fonts.h": "c",
+        "circular_buffer.h": "c"
     },
 }

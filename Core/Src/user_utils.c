@@ -1,5 +1,4 @@
 #include "user_utils.h"
-#include "esp_at.h"
 
 #define LINE_BUFFER_SIZE 1024
 #define ESP_BUFFER_SIZE 1024
@@ -16,6 +15,10 @@ int uart_esp_stream_ptr = 0;
 char* esp_read_buf; // Pointer to buffer returned by util_esp_read*
 
 const char crlf[] = "\r\n";
+
+long epoch_global = 0;
+totp_service service_list[32];
+int service_count = 0;
 
 void
 HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
@@ -54,12 +57,14 @@ util_usart_readline(char* str)
   while (!(cb_empty(&uart_c_buffer) != 1 &&
            (cb_read(&uart_c_buffer, uart_c_buffer.tail - 1) == '\n' ||
             cb_read(&uart_c_buffer, uart_c_buffer.tail - 1) == '\r'))) {
-    /* Wait until: circular buffer ends with a EOL character AND buffer is not empty */
+    /* Wait until: circular buffer ends with a EOL character AND buffer is not
+     * empty */
   }
 
-  uint8_t read_cbuf[CIRCULAR_BUFFER_SIZE] = "";
-  cb_get(&uart_c_buffer, CIRCULAR_BUFFER_SIZE, read_cbuf);
-  util_usart_printstr(read_cbuf);
+  int len = cb_len(&uart_c_buffer);
+  cb_get(&uart_c_buffer, len, str);
+  str[len] = '\0';
+  util_usart_printf("%s\n", str);
 }
 
 void
@@ -169,6 +174,43 @@ util_display_totp(int totp, int time, long epoch)
 }
 
 void
+util_display_totp_multi(totp_service* service_list, int count)
+{
+  int time = epoch_global % TIME_STEP;
+  int totp = 0;
+  char totp_text[SERVICE_DISP_LEN] = "";
+  /* Pad 0 if only 5-digit */
+
+  /* Draw countdown bar */
+  // TODO Fill bar only on 30s cycle reset, skip
+  // this expensive operation during cycles
+  setColor(0, 255, 0);
+  filledRect(19, 100, 19 + 90 - time * (90 / 30), 110);
+  /* Drawing another rectangle to truncate bar on the right end */
+  setColor(0, 0, 0);
+  filledRect(19 + 90 - time * (90 / 30), 100, 19 + 90, 110);
+
+  setColor(255, 255, 255);
+  setFont(ter_u12b);
+  for (int i = 0; i < (count > 3 ? 3 : count); i++) { // Truncate to first 3 services for now
+    totp = util_totp_from_service(&service_list[i]);
+    snprintf(totp_text,
+             SERVICE_DISP_LEN,
+             (totp < 100000 ? "%.8s: 0%d" : "%.8s: %d"),
+             service_list[i].name,
+             totp);
+    drawText(20, 40 + i * 20, totp_text);
+  }
+
+  setFont(ter_u12b);
+  char time_text[32] = "";
+  sprintf(time_text, "%lu", epoch_global);
+  drawText(40, 20, time_text);
+
+  flushBuffer();
+}
+
+void
 util_display_example(void)
 {
   ST7735S_Init();
@@ -236,4 +278,54 @@ util_display_example(void)
 
     flushBuffer();
   }
+}
+
+void
+util_parse_conf(char* raw, int str_len)
+{
+  // ?time=1034134&service=github,1431jck3&service=weibo,jk13k4k;
+  int p = 0;
+  int last = 0;
+  while (raw[p++] != ';' && p < str_len) {
+    if (raw[p] == '&') {
+      util_parse_segment(raw, last, p - 1);
+      last = p + 1;
+    }
+  }
+  util_parse_segment(raw, last, p - 2);
+};
+
+void
+util_parse_segment(char* raw, int start, int end)
+{
+  char* segment = raw + start;
+
+  if (util_str_starts_with(segment, "time") == 0) {
+    segment[end + 1] = '\0'; // ‘&’ => '\0'
+    long epoch = atol(strchr(segment, '=') + 1);
+    epoch_global = epoch;
+    printf("Epoch=%lu", epoch);
+  } else if (util_str_starts_with(segment, "service") == 0) {
+    char* split_equal = strchr(segment, '=');
+    char* split_comma = strchr(segment, ',');
+
+    totp_service* service = &service_list[service_count++];
+    int name_len = split_comma - split_equal - 1;
+    int key_len = (end - start) - (split_comma - (raw + start));
+
+    strncpy(service->name, split_equal + 1, name_len);
+    strncpy(service->key, split_comma + 1, key_len);
+    service->name[name_len] = '\0';
+    service->key[key_len] = '\0';
+
+    printf("Service: %s,%s;", service->name, service->key);
+  }
+
+  printf("\n");
+}
+
+int
+util_totp_from_service(totp_service* service)
+{
+  return hash_totp_sha1(service->key, epoch_global);
 }
