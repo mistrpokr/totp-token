@@ -285,7 +285,7 @@ util_parse_conf(char* raw, int str_len)
   // ?time=1034134&service=github,1431jck3&service=weibo,jk13k4k;
   int p = 0;
   int last = 0;
-  while (raw[p++] != ';') {
+  while (raw[p++] != ';' && p < str_len) {
     if (raw[p] == '&') {
       util_parse_segment(raw, last, p - 1);
       last = p + 1;
