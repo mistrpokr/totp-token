@@ -91,3 +91,6 @@ Bin version:2.4.0(MINI-1)
 
 OK
 ```
+
+
+https://www.eevblog.com/forum/microcontrollers/eeprom-emulation-stm32f4-flash-vs-external-flash-chip/

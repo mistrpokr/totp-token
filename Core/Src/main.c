@@ -78,6 +78,10 @@ extern char uart_line_buffer[];
 extern totp_service service_list[];
 extern int service_count;
 extern long epoch_global;
+
+uint16_t VirtAddVarTab[NB_OF_VAR] = { 0x5555, 0x6666, 0x7777 };
+uint16_t VarDataTab[NB_OF_VAR] = { 0, 0, 0 };
+uint16_t VarValue, VarDataTmp = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,7 +107,6 @@ void
 StartCommsTask(void* argument);
 
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -150,6 +153,123 @@ main(void)
   /* USER CODE BEGIN 2 */
   // util_usart_printstr("[STM32F412ZG]Starting...\r\n");
   printf("[STM32F412ZG]Starting...\r\n");
+
+  HAL_FLASH_Unlock();
+  /* EEPROM Init */
+  if (EE_Init() != EE_OK) {
+    Error_Handler();
+  }
+
+  /* --- Store successively many values of the three variables in the EEPROM
+   * ---*/
+  /* Store 0x1000 values of Variable1 in EEPROM */
+  for (VarValue = 1; VarValue <= 0x1000; VarValue++) {
+    /* Sequence 1 */
+    if ((EE_WriteVariable(VirtAddVarTab[0], VarValue)) != HAL_OK) {
+      Error_Handler();
+    }
+    if ((EE_ReadVariable(VirtAddVarTab[0], &VarDataTab[0])) != HAL_OK) {
+      Error_Handler();
+    }
+    if (VarValue != VarDataTab[0]) {
+      Error_Handler();
+    }
+
+    /* Sequence 2 */
+    if (EE_WriteVariable(VirtAddVarTab[1], ~VarValue) != HAL_OK) {
+      Error_Handler();
+    }
+    if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTab[1]) != HAL_OK) {
+      Error_Handler();
+    }
+    if (((uint16_t)~VarValue) != VarDataTab[1]) {
+      Error_Handler();
+    }
+
+    /* Sequence 3 */
+    if (EE_WriteVariable(VirtAddVarTab[2], VarValue << 1) != HAL_OK) {
+      Error_Handler();
+    }
+    if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTab[2]) != HAL_OK) {
+      Error_Handler();
+    }
+    if ((VarValue << 1) != VarDataTab[2]) {
+      Error_Handler();
+    }
+  }
+
+  /* Store 0x2000 values of Variable2 in EEPROM */
+  for (VarValue = 1; VarValue <= 0x2000; VarValue++) {
+    if (EE_WriteVariable(VirtAddVarTab[1], VarValue) != HAL_OK) {
+      Error_Handler();
+    }
+    if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTab[1]) != HAL_OK) {
+      Error_Handler();
+    }
+    if (VarValue != VarDataTab[1]) {
+      Error_Handler();
+    }
+  }
+
+  /* read the last stored variables data*/
+  if (EE_ReadVariable(VirtAddVarTab[0], &VarDataTmp) != HAL_OK) {
+    Error_Handler();
+  }
+  if (VarDataTmp != VarDataTab[0]) {
+    Error_Handler();
+  }
+
+  if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTmp) != HAL_OK) {
+    Error_Handler();
+  }
+  if (VarDataTmp != VarDataTab[1]) {
+    Error_Handler();
+  }
+
+  if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTmp) != HAL_OK) {
+    Error_Handler();
+  }
+  if (VarDataTmp != VarDataTab[2]) {
+    Error_Handler();
+  }
+
+  /* Store 0x3000 values of Variable3 in EEPROM */
+  for (VarValue = 1; VarValue <= 0x3000; VarValue++) {
+    if (EE_WriteVariable(VirtAddVarTab[2], VarValue) != HAL_OK) {
+      Error_Handler();
+    }
+    if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTab[2]) != HAL_OK) {
+      Error_Handler();
+    }
+    if (VarValue != VarDataTab[2]) {
+      Error_Handler();
+    }
+  }
+
+  /* read the last stored variables data*/
+  if (EE_ReadVariable(VirtAddVarTab[0], &VarDataTmp) != HAL_OK) {
+    Error_Handler();
+  }
+  if (VarDataTmp != VarDataTab[0]) {
+    Error_Handler();
+  }
+
+  if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTmp) != HAL_OK) {
+    Error_Handler();
+  }
+  if (VarDataTmp != VarDataTab[1]) {
+    Error_Handler();
+  }
+
+  if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTmp) != HAL_OK) {
+    Error_Handler();
+  }
+  if (VarDataTmp != VarDataTab[2]) {
+    Error_Handler();
+  }
+
+  for (;;)
+    ;
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -665,6 +785,7 @@ Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state
    */
+  printf("Error! ");
   __disable_irq();
   while (1) {
   }
