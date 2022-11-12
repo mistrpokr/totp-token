@@ -630,7 +630,7 @@ StartCommsTask(void* argument)
     util_usart_readline(uart_line_buffer);
   }
   util_usart_printf("\n%s\n", uart_line_buffer);
-  strcpy(dqueue.buf, uart_line_buffer + strlen(conf_start));
+  strcpy(dqueue.buf, uart_line_buffer);
   osMessageQueuePut(commsQueueHandle, dqueue.buf, NULL, osWaitForever);
 
   // rtc_demo();
