@@ -79,9 +79,8 @@ extern totp_service service_list[];
 extern int service_count;
 extern long epoch_global;
 
-uint16_t VirtAddVarTab[NB_OF_VAR] = { 0x5555, 0x6666, 0x7777 };
-uint16_t VarDataTab[NB_OF_VAR] = { 0, 0, 0 };
-uint16_t VarValue, VarDataTmp = 0;
+const totp_service service1 = { "abcdefgh", "12345678" };
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -153,34 +152,6 @@ main(void)
   /* USER CODE BEGIN 2 */
   // util_usart_printstr("[STM32F412ZG]Starting...\r\n");
   printf("[STM32F412ZG]Starting...\r\n");
-
-  HAL_FLASH_Unlock();
-  /* EEPROM Init */
-  if (EE_Init() != EE_OK) {
-    Error_Handler();
-  }
-
-  /* --- Store successively many values of the three variables in the EEPROM
-   * ---*/
-  /* Store 0x1000 values of Variable1 in EEPROM */
-  if ((EE_WriteVariable(VirtAddVarTab[0], VarValue)) != HAL_OK) {
-    Error_Handler();
-  }
-  if ((EE_ReadVariable(VirtAddVarTab[0], &VarDataTab[0])) != HAL_OK) {
-    Error_Handler();
-  }
-  if (VarValue != VarDataTab[0]) {
-    Error_Handler();
-  }
-
-  /* read the last stored variables data*/
-  if (EE_ReadVariable(VirtAddVarTab[0], &VarDataTmp) != HAL_OK) {
-    Error_Handler();
-  }
-  if (VarDataTmp != VarDataTab[0]) {
-    Error_Handler();
-  }
-  HAL_FLASH_Lock();
 
   /* USER CODE END 2 */
 
@@ -596,6 +567,12 @@ void
 StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
+  eeprom_data_init();
+
+  totp_service service_loaded;
+  eeprom_store_key(&service1);
+  eeprom_read_key(&service_loaded);
+
   util_display_init();
 
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";

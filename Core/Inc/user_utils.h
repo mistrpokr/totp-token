@@ -13,6 +13,7 @@
 #include "gfx.h"
 #include "st7735s.h"
 
+/* Data must be flushed with LF(\n) to be actually printed to stdout(serial)! */
 #define util_usart_printf printf
 
 #define SERVICE_DISP_LEN 24
@@ -26,8 +27,8 @@ typedef enum AT_RES_ENUM
 
 typedef struct totp_service_t
 {
-  char name[128];
-  char key[64];
+  char name[16];
+  char key[16];
 } totp_service;
 
 extern UART_HandleTypeDef huart3;

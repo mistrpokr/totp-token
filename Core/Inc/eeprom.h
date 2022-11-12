@@ -71,8 +71,9 @@
 /* Page full define */
 #define PAGE_FULL             ((uint8_t)0x80)
 
+#define MAX_SERVICES          ((uint8_t)32)
 /* Variables' number */
-#define NB_OF_VAR             ((uint8_t)0x03)
+#define NB_OF_VAR             ((uint8_t)MAX_SERVICES + 1)
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
