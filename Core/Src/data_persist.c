@@ -61,7 +61,7 @@ eeprom_store_key(totp_service* service)
 }
 
 int
-eeprom_read_key(totp_service* service)
+eeprom_read_key(totp_service* service_restored)
 {
   HAL_FLASH_Unlock();
   /* EEPROM Init */
@@ -86,12 +86,14 @@ eeprom_read_key(totp_service* service)
              VIRT_ADDR_OFFSET + idx * 16 + i,
              VIRT_ADDR_OFFSET + idx * 16 + 8 + i);
 
-      service->name[i * 2] = upper_16(name_tmp);
-      service->name[i * 2 + 1] = lower_16(name_tmp);
-      service->key[i * 2] = upper_16(key_tmp);
-      service->key[i * 2 + 1] = lower_16(key_tmp);
+      service_restored->name[i * 2] = upper_16(name_tmp);
+      service_restored->name[i * 2 + 1] = lower_16(name_tmp);
+      service_restored->key[i * 2] = upper_16(key_tmp);
+      service_restored->key[i * 2 + 1] = lower_16(key_tmp);
     }
-    printf("Recovered service: %s, %s\n", service->name, service->key);
+    printf("Recovered service: %s, %s\n",
+           service_restored->name,
+           service_restored->key);
   }
 
   HAL_FLASH_Lock();
@@ -132,13 +134,6 @@ eeprom_test()
   if (EE_Init() != EE_OK) {
     Error_Handler();
   }
-
-  /* --- Store successively many values of the three variables in the EEPROM
-   * ---*/
-  /* Store 0x1000 values of Variable1 in EEPROM */
-  //   if ((EE_ReadVariable(test_addr, test_tmp)) != HAL_OK) {
-  //     Error_Handler();
-  //   }
 
   if ((EE_ReadVariable(test_addr, &test_tmp)) != HAL_OK) {
     printf("Didn't find valid data at virtual EEPROM address 0x%x\n",

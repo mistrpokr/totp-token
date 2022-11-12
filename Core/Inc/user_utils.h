@@ -25,6 +25,10 @@ typedef enum AT_RES_ENUM
   AT_READY = 2,
 } AT_RES;
 
+/**
+ * @brief TOTP Service definition
+ * Name and key (secret) are both 16-byte.
+ */
 typedef struct totp_service_t
 {
   char name[16];
