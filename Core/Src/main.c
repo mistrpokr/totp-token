@@ -163,52 +163,14 @@ main(void)
   /* --- Store successively many values of the three variables in the EEPROM
    * ---*/
   /* Store 0x1000 values of Variable1 in EEPROM */
-  for (VarValue = 1; VarValue <= 0x1000; VarValue++) {
-    /* Sequence 1 */
-    if ((EE_WriteVariable(VirtAddVarTab[0], VarValue)) != HAL_OK) {
-      Error_Handler();
-    }
-    if ((EE_ReadVariable(VirtAddVarTab[0], &VarDataTab[0])) != HAL_OK) {
-      Error_Handler();
-    }
-    if (VarValue != VarDataTab[0]) {
-      Error_Handler();
-    }
-
-    /* Sequence 2 */
-    if (EE_WriteVariable(VirtAddVarTab[1], ~VarValue) != HAL_OK) {
-      Error_Handler();
-    }
-    if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTab[1]) != HAL_OK) {
-      Error_Handler();
-    }
-    if (((uint16_t)~VarValue) != VarDataTab[1]) {
-      Error_Handler();
-    }
-
-    /* Sequence 3 */
-    if (EE_WriteVariable(VirtAddVarTab[2], VarValue << 1) != HAL_OK) {
-      Error_Handler();
-    }
-    if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTab[2]) != HAL_OK) {
-      Error_Handler();
-    }
-    if ((VarValue << 1) != VarDataTab[2]) {
-      Error_Handler();
-    }
+  if ((EE_WriteVariable(VirtAddVarTab[0], VarValue)) != HAL_OK) {
+    Error_Handler();
   }
-
-  /* Store 0x2000 values of Variable2 in EEPROM */
-  for (VarValue = 1; VarValue <= 0x2000; VarValue++) {
-    if (EE_WriteVariable(VirtAddVarTab[1], VarValue) != HAL_OK) {
-      Error_Handler();
-    }
-    if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTab[1]) != HAL_OK) {
-      Error_Handler();
-    }
-    if (VarValue != VarDataTab[1]) {
-      Error_Handler();
-    }
+  if ((EE_ReadVariable(VirtAddVarTab[0], &VarDataTab[0])) != HAL_OK) {
+    Error_Handler();
+  }
+  if (VarValue != VarDataTab[0]) {
+    Error_Handler();
   }
 
   /* read the last stored variables data*/
@@ -218,58 +180,8 @@ main(void)
   if (VarDataTmp != VarDataTab[0]) {
     Error_Handler();
   }
+  HAL_FLASH_Lock();
 
-  if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTmp) != HAL_OK) {
-    Error_Handler();
-  }
-  if (VarDataTmp != VarDataTab[1]) {
-    Error_Handler();
-  }
-
-  if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTmp) != HAL_OK) {
-    Error_Handler();
-  }
-  if (VarDataTmp != VarDataTab[2]) {
-    Error_Handler();
-  }
-
-  /* Store 0x3000 values of Variable3 in EEPROM */
-  for (VarValue = 1; VarValue <= 0x3000; VarValue++) {
-    if (EE_WriteVariable(VirtAddVarTab[2], VarValue) != HAL_OK) {
-      Error_Handler();
-    }
-    if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTab[2]) != HAL_OK) {
-      Error_Handler();
-    }
-    if (VarValue != VarDataTab[2]) {
-      Error_Handler();
-    }
-  }
-
-  /* read the last stored variables data*/
-  if (EE_ReadVariable(VirtAddVarTab[0], &VarDataTmp) != HAL_OK) {
-    Error_Handler();
-  }
-  if (VarDataTmp != VarDataTab[0]) {
-    Error_Handler();
-  }
-
-  if (EE_ReadVariable(VirtAddVarTab[1], &VarDataTmp) != HAL_OK) {
-    Error_Handler();
-  }
-  if (VarDataTmp != VarDataTab[1]) {
-    Error_Handler();
-  }
-
-  if (EE_ReadVariable(VirtAddVarTab[2], &VarDataTmp) != HAL_OK) {
-    Error_Handler();
-  }
-  if (VarDataTmp != VarDataTab[2]) {
-    Error_Handler();
-  }
-
-  for (;;)
-    ;
   /* USER CODE END 2 */
 
   /* Init scheduler */
