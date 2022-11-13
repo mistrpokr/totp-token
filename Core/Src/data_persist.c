@@ -26,7 +26,7 @@ uint16_t test_tmp = 0U;
 int service_stored = 0; // Number of services stored in EEPROM
 
 int
-eeprom_store_key(totp_service* service)
+eeprom_store_service(totp_service* service)
 {
   HAL_FLASH_Unlock();
   /* EEPROM Init */
@@ -60,7 +60,7 @@ eeprom_store_key(totp_service* service)
 }
 
 int
-eeprom_read_key(totp_service* service_restored)
+eeprom_read_service(totp_service* service_restored)
 {
   HAL_FLASH_Unlock();
   /* EEPROM Init */

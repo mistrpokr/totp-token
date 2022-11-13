@@ -9,7 +9,7 @@
  * @return int
  */
 int
-eeprom_store_key(totp_service* service);
+eeprom_store_service(totp_service* service);
 
 /**
  * @brief Read service struct data from emulated EEPROM.
@@ -18,7 +18,7 @@ eeprom_store_key(totp_service* service);
  * @return int
  */
 int
-eeprom_read_key(totp_service* service_restored);
+eeprom_read_service(totp_service* service_restored);
 
 int
 eeprom_data_init();

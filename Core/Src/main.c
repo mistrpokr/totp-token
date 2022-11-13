@@ -570,8 +570,8 @@ StartDefaultTask(void* argument)
   eeprom_data_init();
 
   totp_service service_loaded;
-  eeprom_store_key(&service1);
-  eeprom_read_key(&service_loaded);
+  eeprom_store_service(&service1);
+  eeprom_read_service(&service_loaded);
 
   util_display_init();
 
@@ -580,8 +580,6 @@ StartDefaultTask(void* argument)
   char hmac1_digest_formatted[SHA_DIGEST_SIZE * 2] = "";
   int totp_res = 0;
   int epoch_time = 0;
-
-  // util_usart_printf("KEY=%s", HMAC_DEFAULT_KEY);
 
   /* Update epoch time */
   epoch_time = 0;
@@ -595,9 +593,11 @@ StartDefaultTask(void* argument)
   strncpy(conf_raw, dqueue.buf, max(64, MSG_BUF_SIZE));
   printf("\nGot conf text: %s\n", conf_raw);
 
-  totp_service service;
   util_parse_conf(conf_raw, strlen(conf_raw));
-  // printf("[STM32F412ZG]\r\n");
+
+  for (int i = 0; i < service_count; i++) {
+    eeprom_store_service(&service_list[i]);
+  }
 
   while (1) {
     util_display_totp_multi(service_list, service_count);
