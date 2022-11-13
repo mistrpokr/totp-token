@@ -8,8 +8,8 @@ A hardware [TOTP](https://en.wikipedia.org/wiki/Time-based_one-time_password) to
     - [Software Requirements](#software-requirements)
       - [MacOS with `HomeBrew`](#macos-with-homebrew)
       - [Arch Linux](#arch-linux)
+    - [Building](#building)
     - [Hardware Requirements](#hardware-requirements)
-    - [Wiring](#wiring)
   - [Notes](#notes)
     - [Nucleo-F412ZG Pinout Reference](#nucleo-f412zg-pinout-reference)
     - [~~Interfacing with ESP32 (AT Firmware)~~ (Deprecated)](#interfacing-with-esp32-at-firmware-deprecated)
@@ -55,7 +55,29 @@ Install the following `pacman` packages.
 - picocom
 - stm32cubemx (AUR package)
 
-Additionally **on Linux hosts**, [`bear`](https://github.com/rizsotto/Bear) can be used to generate `compile_commands.json` for VSCode C/C++ extension's IntelliSense. 
+Additionally **on Linux hosts**, [`bear`](https://github.com/rizsotto/Bear) can be used to generate `compile_commands.json` for VSCode C/C++ extension's IntelliSense. While `bear` should work on MacOS as well, I have had no luck with it. 
+
+### Building
+
+```bash
+# Build project
+$ make all
+# Or if you are on a hurry, assuming your platform has 8 cores or more...
+$ make all -j8
+
+# Cleanup
+$ make clean
+
+# Flash with openocd
+# Substitute with the path to openocd cfgs in your system's installation
+$ openocd -f "/opt/homebrew/share/openocd/scripts/board/st_nucleo_f4.cfg" -c "program build/f412_exp.elf reset verify exit"
+
+# Connect to UART with picocom
+# Substitute with the tty device allocated for ST-Link
+# For Linux it could be ttyACM0 or ttyUSB0
+$ picocom --baud 115200 --imap lfcrlf /dev/tty.usbmodem11303
+```
+
 
 ### Hardware Requirements
 - [STM32 Nucleo-F412ZG](https://www.st.com/en/evaluation-tools/nucleo-f412zg.html)
@@ -64,7 +86,7 @@ Additionally **on Linux hosts**, [`bear`](https://github.com/rizsotto/Bear) can 
 - Breadboard
 - Jumpers
 
-### Wiring
+<!-- ### Wiring -->
 <!-- TODO -->
 
 ---
