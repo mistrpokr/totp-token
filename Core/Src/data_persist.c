@@ -1,7 +1,7 @@
 #include "data_persist.h"
 
-#define VIRT_ADDR_OFFSET 0x5000
-#define INDEX_VAR_VIRT_ADDR 0xfff0
+#define VIRT_ADDR_OFFSET 0x0000
+#define INDEX_VAR_VIRT_ADDR 0x2000
 
 #define upper_16(x) ((x & 0xff00) >> 8)
 #define lower_16(x) (x & 0x00ff)
@@ -26,17 +26,37 @@ uint16_t test_tmp = 0U;
 int service_stored = 0; // Number of services stored in EEPROM
 
 int
-eeprom_store_service(totp_service* service)
+eeprom_data_init()
 {
+  uint16_t alloc_addr = 0x00;
+  for (int i = 0; i < NB_OF_VAR - 1; i++) {
+    VirtAddVarTab[i] = alloc_addr;
+    alloc_addr += 0x0010;
+  }
+  /* Finally, format the index variable */
+  VirtAddVarTab[NB_OF_VAR - 1] = INDEX_VAR_VIRT_ADDR;
+
+  for (int i = 0; i < NB_OF_VAR; i++) {
+    printf("Allocated Virt Addr: ");
+    printf("0x%x, ", VirtAddVarTab[i]);
+    printf("\n");
+  }
+
   HAL_FLASH_Unlock();
+
   /* EEPROM Init */
   if (EE_Init() != EE_OK) {
     Error_Handler();
   }
 
-  /* Current service name/key size limit is 16 bytes / 8 halfwords */
-  HAL_StatusTypeDef res = HAL_OK;
+  HAL_FLASH_Lock();
+}
 
+int
+eeprom_store_service(totp_service* service)
+{
+  HAL_FLASH_Unlock();
+  /* Current service name/key size limit is 16 bytes / 8 halfwords */
   printf("Storing service: %s, %s\n", service->name, service->key);
   for (int i = 0; i < 8; i++) {
     if (EE_WriteVariable(VIRT_ADDR_OFFSET + service_stored * 16 + i,
@@ -60,67 +80,63 @@ eeprom_store_service(totp_service* service)
 }
 
 int
-eeprom_read_service(totp_service* service_restored)
+eeprom_read_service(totp_service* service_restored, int id)
 {
   HAL_FLASH_Unlock();
-  /* EEPROM Init */
-  if (EE_Init() != EE_OK) {
-    Error_Handler();
-  }
 
   uint16_t name_tmp = 0;
   uint16_t key_tmp = 0;
   char upper = 0, lower = 0;
 
-  HAL_StatusTypeDef res = HAL_OK;
-  for (int idx = 0; idx < service_stored; idx++) {
-    for (int i = 0; i < 8; i++) {
-      if (EE_ReadVariable(VIRT_ADDR_OFFSET + idx * 16 + i, &name_tmp) !=
-            HAL_OK ||
-          EE_ReadVariable(VIRT_ADDR_OFFSET + idx * 16 + 8 + i, &key_tmp) !=
-            HAL_OK) {
-        printf("Read key error! \n");
-      }
-      printf("Read from 0x%x and 0x%x\n",
-             VIRT_ADDR_OFFSET + idx * 16 + i,
-             VIRT_ADDR_OFFSET + idx * 16 + 8 + i);
-
-      service_restored->name[i * 2] = upper_16(name_tmp);
-      service_restored->name[i * 2 + 1] = lower_16(name_tmp);
-      service_restored->key[i * 2] = upper_16(key_tmp);
-      service_restored->key[i * 2 + 1] = lower_16(key_tmp);
+  for (int i = 0; i < 8; i++) {
+    if (EE_ReadVariable(VIRT_ADDR_OFFSET + id * 16 + i, &name_tmp) != HAL_OK ||
+        EE_ReadVariable(VIRT_ADDR_OFFSET + id * 16 + 8 + i, &key_tmp) !=
+          HAL_OK) {
+      printf("Read key error! \n");
     }
-    printf("Recovered service: %s, %s\n",
-           service_restored->name,
-           service_restored->key);
+    printf("Read from 0x%x and 0x%x\n",
+           VIRT_ADDR_OFFSET + id * 16 + i,
+           VIRT_ADDR_OFFSET + id * 16 + 8 + i);
+
+    service_restored->name[i * 2] = upper_16(name_tmp);
+    service_restored->name[i * 2 + 1] = lower_16(name_tmp);
+    service_restored->key[i * 2] = upper_16(key_tmp);
+    service_restored->key[i * 2 + 1] = lower_16(key_tmp);
   }
+  printf("Recovered service: %s, %s\n",
+         service_restored->name,
+         service_restored->key);
 
   HAL_FLASH_Lock();
 }
 
-int
-eeprom_data_init()
+uint16_t
+eeprom_stat()
 {
-  uint16_t alloc_addr = 0x00;
-  for (int i = 0; i < NB_OF_VAR - 1; i++) {
-    VirtAddVarTab[i] = alloc_addr;
-    alloc_addr += 0x0010;
-  }
-  /* Finally, format the index variable */
-  VirtAddVarTab[NB_OF_VAR - 1] = INDEX_VAR_VIRT_ADDR;
-
-  for (int i = 0; i < NB_OF_VAR; i++) {
-    printf("Allocated Virt Addr: ");
-    printf("0x%x, ", VirtAddVarTab[i]);
-    printf("\n");
-  }
+  uint16_t stored_entries = 0x0000;
 
   HAL_FLASH_Unlock();
 
-  /* EEPROM Init */
-  if (EE_Init() != EE_OK) {
-    Error_Handler();
+  uint16_t ret = EE_ReadVariable(INDEX_VAR_VIRT_ADDR, &stored_entries);
+  if (ret == 1) {
+    // Doesn't exist
+    printf("Read index error! \n");
   }
+
+  printf("%d service entries stored in EEPROM\n", stored_entries);
+
+  HAL_FLASH_Lock();
+
+  return stored_entries;
+}
+
+void
+eeprom_update_index()
+{
+  HAL_FLASH_Unlock();
+
+  EE_WriteVariable(INDEX_VAR_VIRT_ADDR, service_stored);
+  printf("Updated index to %d (0x%x)", service_stored, service_stored);
 
   HAL_FLASH_Lock();
 }

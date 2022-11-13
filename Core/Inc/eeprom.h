@@ -74,7 +74,7 @@
 
 /* Variables' number */
 /* Proabably a bad idea to mix driver/application layers... */
-#define NB_OF_VAR             MAX_SERVICES
+#define NB_OF_VAR             (MAX_SERVICES + 1)
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/

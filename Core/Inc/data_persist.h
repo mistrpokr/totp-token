@@ -18,10 +18,16 @@ eeprom_store_service(totp_service* service);
  * @return int
  */
 int
-eeprom_read_service(totp_service* service_restored);
+eeprom_read_service(totp_service* service_restored, int id);
 
 int
 eeprom_data_init();
+
+uint16_t
+eeprom_stat();
+
+void
+eeprom_update_index();
 
 int
 eeprom_test();

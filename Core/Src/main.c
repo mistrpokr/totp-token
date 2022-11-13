@@ -568,10 +568,7 @@ StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
   eeprom_data_init();
-
-  totp_service service_loaded;
-  eeprom_store_service(&service1);
-  eeprom_read_service(&service_loaded);
+  // eeprom_test();
 
   util_display_init();
 
@@ -581,22 +578,38 @@ StartDefaultTask(void* argument)
   int totp_res = 0;
   int epoch_time = 0;
 
-  /* Update epoch time */
-  epoch_time = 0;
-  data_queue dqueue;
+  /* Check if have existing conf */
 
-  char conf_raw[1024] = "";
-  time_t time_received = 0U;
+  int stored_entries = eeprom_stat();
+  if (stored_entries > 0) {
+    // If found stored service data
+    printf("Loading %d entries from EEPROM\n", stored_entries);
+    for (int i = 0; i < stored_entries; i++) {
+      eeprom_read_service(&service_list[i], i);
+      printf("Name=%s, Secret=%s\n", service_list[i].name, service_list[i].key);
+    }
+    service_count = stored_entries;
+  } else {
+    printf("No entries found in EEPROM! Please input data to continue...\n");
+    /* Update epoch time */
+    epoch_time = 0;
+    data_queue dqueue;
 
-  /* Get conf */
-  osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
-  strncpy(conf_raw, dqueue.buf, max(64, MSG_BUF_SIZE));
-  printf("\nGot conf text: %s\n", conf_raw);
+    char conf_raw[1024] = "";
+    time_t time_received = 0U;
 
-  util_parse_conf(conf_raw, strlen(conf_raw));
+    /* Get conf */
+    osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
+    strncpy(conf_raw, dqueue.buf, max(64, MSG_BUF_SIZE));
+    printf("\nGot conf text: %s\n", conf_raw);
 
-  for (int i = 0; i < service_count; i++) {
-    eeprom_store_service(&service_list[i]);
+    util_parse_conf(conf_raw, strlen(conf_raw));
+
+    for (int i = 0; i < service_count; i++) {
+      eeprom_store_service(&service_list[i]);
+    }
+
+    eeprom_update_index();
   }
 
   while (1) {
