@@ -17,7 +17,7 @@ char* esp_read_buf; // Pointer to buffer returned by util_esp_read*
 const char crlf[] = "\r\n";
 
 long epoch_global = 0;
-totp_service service_list[32];
+totp_service service_list[MAX_SERVICES];
 int service_count = 0;
 
 void
@@ -192,7 +192,8 @@ util_display_totp_multi(totp_service* service_list, int count)
 
   setColor(255, 255, 255);
   setFont(ter_u12b);
-  for (int i = 0; i < (count > 3 ? 3 : count); i++) { // Truncate to first 3 services for now
+  for (int i = 0; i < (count > 3 ? 3 : count);
+       i++) { // Truncate to first 3 services for now
     totp = util_totp_from_service(&service_list[i]);
     snprintf(totp_text,
              SERVICE_DISP_LEN,
@@ -301,27 +302,38 @@ util_parse_segment(char* raw, int start, int end)
   char* segment = raw + start;
 
   if (util_str_starts_with(segment, "time") == 0) {
-    segment[end + 1] = '\0'; // ‘&’ => '\0'
+    segment[end + 1] = '\0'; // Trailing ‘&’ => '\0'
     long epoch = atol(strchr(segment, '=') + 1);
     epoch_global = epoch;
     printf("Epoch=%lu", epoch);
   } else if (util_str_starts_with(segment, "service") == 0) {
-    char* split_equal = strchr(segment, '=');
-    char* split_comma = strchr(segment, ',');
 
-    totp_service* service = &service_list[service_count++];
-    int name_len = split_comma - split_equal - 1;
-    int key_len = (end - start) - (split_comma - (raw + start));
+    char* name_start = strchr(segment, '=') + 1;
+    char* key_start = strchr(segment, ',') + 1;
 
-    strncpy(service->name, split_equal + 1, name_len);
-    strncpy(service->key, split_comma + 1, key_len);
-    service->name[name_len] = '\0';
-    service->key[key_len] = '\0';
+    int name_len = key_start - name_start - 1;
+    int key_len = (end - start) - name_len - (name_start - segment);
 
-    printf("Service: %s,%s;", service->name, service->key);
+    totp_service* new_service = util_save_service(
+      service_count++, name_start, key_start, name_len, key_len);
+
+    printf("Service: %s,%s;", new_service->name, new_service->key);
   }
 
   printf("\n");
+}
+
+totp_service*
+util_save_service(int id, char* name, char* key, int name_len, int key_len)
+{
+  totp_service* service = &service_list[id];
+
+  strncpy(service->name, name, name_len);
+  strncpy(service->key, key, key_len);
+  service->name[name_len] = '\0';
+  service->key[key_len] = '\0';
+
+  return service;
 }
 
 int

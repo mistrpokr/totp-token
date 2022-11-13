@@ -37,7 +37,6 @@ extern "C"
 #include "st7735s_compat.h"
 #include "time_rtc.h"
 #include "user_utils.h"
-#include "eeprom.h"
 #include "data_persist.h"
 #include <stdbool.h>
 #include <stdio.h>

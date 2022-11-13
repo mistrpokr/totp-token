@@ -17,6 +17,7 @@
 #define util_usart_printf printf
 
 #define SERVICE_DISP_LEN 24
+#define MAX_SERVICES 32
 
 typedef enum AT_RES_ENUM
 {
@@ -66,6 +67,8 @@ void
 util_parse_conf(char* raw, int str_len);
 void
 util_parse_segment(char* raw, int start, int end);
+totp_service*
+util_save_service(int id, char* name, char* key, int name_len, int key_len);
 int
 util_totp_from_service(totp_service* service);
 #endif

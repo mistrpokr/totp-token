@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "user_utils.h"
 
 /* Exported constants --------------------------------------------------------*/
 /* EEPROM emulation firmware error codes */
@@ -71,9 +72,9 @@
 /* Page full define */
 #define PAGE_FULL             ((uint8_t)0x80)
 
-#define MAX_SERVICES          ((uint8_t)32)
 /* Variables' number */
-#define NB_OF_VAR             ((uint8_t)MAX_SERVICES + 1)
+/* Proabably a bad idea to mix driver/application layers... */
+#define NB_OF_VAR             MAX_SERVICES
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/

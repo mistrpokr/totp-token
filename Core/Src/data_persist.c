@@ -1,5 +1,4 @@
 #include "data_persist.h"
-#include "eeprom.h"
 
 #define VIRT_ADDR_OFFSET 0x5000
 #define INDEX_VAR_VIRT_ADDR 0xfff0
