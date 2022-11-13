@@ -78,6 +78,9 @@ extern char uart_line_buffer[];
 extern totp_service service_list[];
 extern int service_count;
 extern long epoch_global;
+
+const totp_service service1 = { "abcdefgh", "12345678" };
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,7 +106,6 @@ void
 StartCommsTask(void* argument);
 
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -150,6 +152,7 @@ main(void)
   /* USER CODE BEGIN 2 */
   // util_usart_printstr("[STM32F412ZG]Starting...\r\n");
   printf("[STM32F412ZG]Starting...\r\n");
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -564,6 +567,9 @@ void
 StartDefaultTask(void* argument)
 {
   /* USER CODE BEGIN 5 */
+  eeprom_data_init();
+  // eeprom_test();
+
   util_display_init();
 
   byte hmac256_digest[SHA256_DIGEST_SIZE] = "";
@@ -572,23 +578,39 @@ StartDefaultTask(void* argument)
   int totp_res = 0;
   int epoch_time = 0;
 
-  // util_usart_printf("KEY=%s", HMAC_DEFAULT_KEY);
+  /* Check if have existing conf */
 
-  /* Update epoch time */
-  epoch_time = 0;
-  data_queue dqueue;
+  int stored_entries = eeprom_stat();
+  if (stored_entries > 0) {
+    // If found stored service data
+    printf("Loading %d entries from EEPROM\n", stored_entries);
+    for (int i = 0; i < stored_entries; i++) {
+      eeprom_read_service(&service_list[i], i);
+      printf("Name=%s, Secret=%s\n", service_list[i].name, service_list[i].key);
+    }
+    service_count = stored_entries;
+  } else {
+    printf("No entries found in EEPROM! Please input data to continue...\n");
+    /* Update epoch time */
+    epoch_time = 0;
+    data_queue dqueue;
 
-  char conf_raw[1024] = "";
-  time_t time_received = 0U;
+    char conf_raw[1024] = "";
+    time_t time_received = 0U;
 
-  /* Get conf */
-  osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
-  strncpy(conf_raw, dqueue.buf, max(64, MSG_BUF_SIZE));
-  printf("\nGot conf text: %s\n", conf_raw);
+    /* Get conf */
+    osMessageQueueGet(commsQueueHandle, &dqueue, NULL, osWaitForever);
+    strncpy(conf_raw, dqueue.buf, max(64, MSG_BUF_SIZE));
+    printf("\nGot conf text: %s\n", conf_raw);
 
-  totp_service service;
-  util_parse_conf(conf_raw, strlen(conf_raw));
-  // printf("[STM32F412ZG]\r\n");
+    util_parse_conf(conf_raw, strlen(conf_raw));
+
+    for (int i = 0; i < service_count; i++) {
+      eeprom_store_service(&service_list[i]);
+    }
+
+    eeprom_update_index();
+  }
 
   while (1) {
     util_display_totp_multi(service_list, service_count);
@@ -621,7 +643,7 @@ StartCommsTask(void* argument)
     util_usart_readline(uart_line_buffer);
   }
   util_usart_printf("\n%s\n", uart_line_buffer);
-  strcpy(dqueue.buf, uart_line_buffer + strlen(conf_start));
+  strcpy(dqueue.buf, uart_line_buffer);
   osMessageQueuePut(commsQueueHandle, dqueue.buf, NULL, osWaitForever);
 
   // rtc_demo();
@@ -665,6 +687,7 @@ Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state
    */
+  printf("Error! ");
   __disable_irq();
   while (1) {
   }

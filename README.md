@@ -3,6 +3,7 @@ A hardware [TOTP](https://en.wikipedia.org/wiki/Time-based_one-time_password) to
 
 ---
 - [TOTP Token](#totp-token)
+  - [Features](#features)
   - [Getting Started](#getting-started)
     - [Software Requirements](#software-requirements)
       - [MacOS with `HomeBrew`](#macos-with-homebrew)
@@ -15,6 +16,15 @@ A hardware [TOTP](https://en.wikipedia.org/wiki/Time-based_one-time_password) to
       - [Hardware Connection](#hardware-connection)
       - [Samples](#samples)
 ---
+## Features
+- [x] Data download over UART
+  - [x] Serial data parsing
+- [x] Data persistence with EEPROM Emulation
+- [x] [Web app for TOTP service data management](https://github.com/mistrpokr/tinytotp-web)
+- [ ] Epoch time tracking with RTC on battery
+- [ ] PCB Design
+
+
 ## Getting Started
 This project is primarily set up with STM32CubeMX and can be with `gcc` and `make`. 
 
@@ -91,3 +101,6 @@ Bin version:2.4.0(MINI-1)
 
 OK
 ```
+
+
+https://www.eevblog.com/forum/microcontrollers/eeprom-emulation-stm32f4-flash-vs-external-flash-chip/

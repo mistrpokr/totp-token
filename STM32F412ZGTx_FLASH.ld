@@ -59,10 +59,13 @@ _Min_Heap_Size = 0x200;      /* required amount of heap  */
 _Min_Stack_Size = 0x400; /* required amount of stack */
 
 /* Specify the memory areas */
+/* Reference: https://electronics.stackexchange.com/questions/391645/stm32f4-adjust-linker-script-to-save-memory-for-eeprom-emulation */
 MEMORY
 {
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 256K
-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 1024K
+FLASH_BOOT (rx)      : ORIGIN = 0x8000000, LENGTH = 32K
+EMULATED_EEPROM (xrw) : ORIGIN = 0x8008000, LENGTH = 32K
+FLASH (rx)  : ORIGIN = 0x8010000, LENGTH = 960K
 }
 
 /* Define output sections */
@@ -74,7 +77,7 @@ SECTIONS
     . = ALIGN(4);
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
-  } >FLASH
+  } >FLASH_BOOT
 
   /* The program code and other data goes into FLASH */
   .text :

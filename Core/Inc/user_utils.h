@@ -13,9 +13,11 @@
 #include "gfx.h"
 #include "st7735s.h"
 
+/* Data must be flushed with LF(\n) to be actually printed to stdout(serial)! */
 #define util_usart_printf printf
 
 #define SERVICE_DISP_LEN 24
+#define MAX_SERVICES 32
 
 typedef enum AT_RES_ENUM
 {
@@ -24,10 +26,14 @@ typedef enum AT_RES_ENUM
   AT_READY = 2,
 } AT_RES;
 
+/**
+ * @brief TOTP Service definition
+ * Name and key (secret) are both 16-byte.
+ */
 typedef struct totp_service_t
 {
-  char name[128];
-  char key[64];
+  char name[16];
+  char key[16];
 } totp_service;
 
 extern UART_HandleTypeDef huart3;
@@ -61,6 +67,8 @@ void
 util_parse_conf(char* raw, int str_len);
 void
 util_parse_segment(char* raw, int start, int end);
+totp_service*
+util_save_service(int id, char* name, char* key, int name_len, int key_len);
 int
 util_totp_from_service(totp_service* service);
 #endif
